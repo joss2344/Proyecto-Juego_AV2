@@ -48,35 +48,34 @@ SKILL_ICON_PATHS = {
     "skeleton_sword": "Skills/skeleton_sword.png",
     "hongo_proyectil": "Skills/hongo_proyectil.png"
 }
-
-# --- DICCIONARIO CENTRAL DE ENEMIGOS (en constants.py) ---
 # --- DICCIONARIO CENTRAL DE ENEMIGOS (en constants.py) ---
 ENEMY_INFO = {
-    # El lobo con escala pequeña necesita un y_offset pequeño.
-    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 5, "scale": 0.2, "y_offset": 8, "sprite_path": "Enemies/lobos.png", "death_sound": "sounds/lobodeath.mp3"},
-    "depredator": {"health": 50, "speed": 2,   "contact_damage": 8, "scale": 1.5, "y_offset": 5, "sprite_path": "Enemies/depredator.png", "death_sound": "sounds/lobodeath.mp3"},
-    "fire":       {"health": 40, "speed": 1.8, "contact_damage": 10, "scale": 1.5, "y_offset": 5, "sprite_path": "Enemies/fire.png", "death_sound": "sounds/lobodeath.mp3"},
-    "jades":      {"health": 80, "speed": 1.5, "contact_damage": 12, "scale": 1.5, "y_offset": 5, "sprite_path": "Enemies/jades.png", "death_sound": "sounds/lobodeath.mp3"},
-    "wind":       {"health": 35, "speed": 2.2, "contact_damage": 7, "scale": 1.5, "y_offset": 5, "sprite_path": "Enemies/wind.png", "death_sound": "sounds/lobodeath.mp3"},
+    # --- Enemigos Básicos (sin animación de ataque, daño por contacto) ---
+    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 5, "scale": 0.2, "y_offset": 12, "sprite_path": "Enemies/lobos.png", "death_sound": "sounds/lobodeath.mp3"}, # <-- Ajuste final de altura
+    "depredator": {"health": 50, "speed": 2,   "contact_damage": 8, "scale": 0.5, "y_offset": 5, "sprite_path": "Enemies/depredator.png", "death_sound": "sounds/lobodeath.mp3"},
+    "fire":       {"health": 40, "speed": 1.8, "contact_damage": 10, "scale": 5.5, "y_offset": 5, "sprite_path": "Enemies/fire.png", "death_sound": "sounds/lobodeath.mp3"},
+    "jades":      {"health": 80, "speed": 1.5, "contact_damage": 12, "scale": 5.5, "y_offset": 5, "sprite_path": "Enemies/jades.png", "death_sound": "sounds/lobodeath.mp3"},
+    "wind":       {"health": 35, "speed": 2.2, "contact_damage": 7, "scale": 5.5, "y_offset": 5, "sprite_path": "Enemies/wind.png", "death_sound": "sounds/lobodeath.mp3"},
     
+    # --- Enemigos con Animaciones y Lógica de Ataque ---
     "esqueleto": {
         "health": 60, "speed": 1.5, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 1.8, "y_offset": 5,
         "attack_damage": 15, "attack_range": 120, "attack_cooldown": 1500, "attack_damage_frame": 4, "detection_radius": 400,
         "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6} }
     },
-    # El golem con escala grande necesita un y_offset grande.
+    # Ajuste final de altura Y RANGO DE ATAQUE AUMENTADO
     "golem": {
-        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 3.5, "y_offset": 15,
-        "attack_damage": 25, "attack_range": 150, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 300,
+        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 3.5, "y_offset": 25, 
+        "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 350, # <-- RANGO AUMENTADO
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
             "walk":   {"path": "Enemies/golem/Golem_1_walk.png",   "frames": 10},
-            "attack": {"path": "Enemies/golem/Golem_1_attack.png", "frames": 11},
-            "die":    {"path": "Enemies/golem/Golem_1_die.png",    "frames": 13}
+            "attack": {"path": "Enemies/golem/Golem_1_attack.png", "frames": 9},
+            "die":    {"path": "Enemies/golem/Golem_1_die.png",    "frames": 11}
         }
     },
     "wizzardblue": {
-        "health": 70, "speed": 1.8, "death_sound": "sounds/lobodeath.mp3", "scale": 1.5, "y_offset": 15,
+        "health": 70, "speed": 1.8, "death_sound": "sounds/lobodeath.mp3", "scale": 1.2, "y_offset": 15,
         "attack_damage": 18, "attack_range": 350, "attack_cooldown": 1800, "attack_damage_frame": 3, "detection_radius": 500,
         "is_flying": True, "is_ranged": True, 
         "sprite_path": "Enemies/wizzardblue.png"
