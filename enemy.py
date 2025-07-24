@@ -320,32 +320,96 @@ class Boss2(Enemigo):
             sys.exit()
         super().__init__(x, y, 0, enemy_info)
         
-        self.attack_cooldown = 2200
+        self.attack_cooldown = 1800 # Tiempo entre ataques
         self.last_attack_time = pygame.time.get_ticks()
-        self.ataques_disponibles = ["homing_orb", "ground_eruption", "melee_attack"]
 
     def actualizar(self, jugador):
-        if self.salud <= 0:
-            self.action = 'die' if 'die' in self.animations else 'idle'
+        # Limpiamos la lista de proyectiles por si quedaba algo de la versión anterior
+        self.proyectiles = []
+
+        if self.is_dying:
             self.update_animation()
             return
+        
+        if self.salud > 0:
+            dist_x = jugador.hitbox.centerx - self.hitbox.centerx
+            distancia_al_jugador = abs(dist_x)
             
-        if jugador.rect.centerx < self.rect.centerx:
-            self.facing_right = False
-        else:
-            self.facing_right = True
+            # --- NUEVA LÓGICA DE IA: PERSEGUIR Y ATACAR ---
+            if self.action != 'attack':
+                # 1. Atacar si está en rango
+                if distancia_al_jugador < self.attack_range and pygame.time.get_ticks() > self.last_attack_time + self.attack_cooldown:
+                    self.atacar(jugador)
+                
+                # 2. Perseguir si ve al jugador pero no está en rango de ataque
+                elif distancia_al_jugador < self.detection_radius and distancia_al_jugador > self.attack_range:
+                    self.action = 'walk'
+                    if dist_x > 0: # Si el jugador está a la derecha
+                        self.vel_x = self.speed
+                        self.facing_right = True
+                    else: # Si el jugador está a la izquierda
+                        self.vel_x = -self.speed
+                        self.facing_right = False
+                
+                # 3. Quedarse quieto si el jugador está muy lejos
+                else:
+                    self.action = 'idle'
+                    self.vel_x = 0
             
-        # --- LÓGICA DE ACTUALIZACIÓN DE PROYECTILES CORREGIDA ---
-        # El proyectil ya tiene la referencia al jugador, no es necesario pasársela de nuevo.
+            # Lógica para aplicar daño durante la animación de ataque
+            if self.action == 'attack':
+                self.vel_x = 0 # No se mueve mientras ataca
+                if self.frame_index == self.attack_damage_frame and not self.damage_dealt_this_attack:
+                    # Comprueba si el jugador sigue cerca al momento del golpe
+                    if abs(jugador.hitbox.centerx - self.hitbox.centerx) < self.attack_range + 50:
+                        jugador.tomar_danio(self.attack_damage)
+                        self.damage_dealt_this_attack = True
+
+        # Aplicar movimiento a la caja de físicas
+        self.rect.x += self.vel_x
+
+        # Sincronizar hitbox y animación
+        hitbox_offset = self.enemy_info.get("hitbox_offset", (0, 0))
+        self.hitbox.centerx = self.rect.centerx + hitbox_offset[0]
+        self.hitbox.centery = self.rect.centery + hitbox_offset[1]
+        self.update_animation()
+
+    def atacar(self, jugador):
+        # El ataque físico es simplemente activar la animación
+        self.action = 'attack'
+        self.frame_index = 0
+        self.last_attack_time = pygame.time.get_ticks()
+
+
+# En enemy.py
+
+class Boss3(Enemigo):
+    def __init__(self, x, y, enemy_name):
+        enemy_info = ENEMY_INFO.get(enemy_name)
+        if not enemy_info:
+            print(f"ERROR: No se encontró la info para el jefe '{enemy_name}'")
+            sys.exit()
+        super().__init__(x, y, 0, enemy_info)
+        
+        self.attack_cooldown = 2500 # Ataca cada 2.5 segundos
+        self.last_attack_time = pygame.time.get_ticks()
+        self.ataques_disponibles = ["falling_sky", "diagonal_burst", "ground_wave"]
+
+    def actualizar(self, jugador):
+        self.vel_x = 0 # Es un jefe estacionario
+
+        # Actualiza proyectiles existentes
         for p in self.proyectiles[:]:
-            p.actualizar()
+            p.actualizar(jugador.rect.x)
             if not p.activo: self.proyectiles.remove(p)
 
+        # Comprueba si es tiempo de atacar
         ahora = pygame.time.get_ticks()
-        if ahora - self.last_attack_time > self.attack_cooldown:
+        if ahora - self.last_attack_time > self.attack_cooldown and self.action == 'idle':
             self.atacar(jugador)
             self.last_attack_time = ahora
         
+        # Sincroniza hitbox y animación
         hitbox_offset = self.enemy_info.get("hitbox_offset", (0, 0))
         self.hitbox.centerx = self.rect.centerx + hitbox_offset[0]
         self.hitbox.centery = self.rect.centery + hitbox_offset[1]
@@ -354,14 +418,20 @@ class Boss2(Enemigo):
     def atacar(self, jugador):
         ataque_elegido = random.choice(self.ataques_disponibles)
         
-        if ataque_elegido == "homing_orb":
-            nuevo_proyectil = abilities.NightBorneHomingOrb(self.hitbox.centerx, self.hitbox.centery, jugador)
-            self.proyectiles.append(nuevo_proyectil)
-        
-        elif ataque_elegido == "ground_eruption":
-            nuevo_proyectil = abilities.NightBorneEruption(jugador.hitbox.centerx, jugador.rect.bottom)
-            self.proyectiles.append(nuevo_proyectil)
-            
-        elif ataque_elegido == "melee_attack":
-            self.action = 'attack'
-            self.frame_index = 0
+        if ataque_elegido == "falling_sky":
+            # Lanza 5 proyectiles que caen sobre el jugador
+            for i in range(5):
+                offset = random.randint(-150, 150)
+                proyectil = abilities.AgisFallingProjectile(jugador.hitbox.centerx + offset, self.rect.bottom)
+                self.proyectiles.append(proyectil)
+
+        elif ataque_elegido == "diagonal_burst":
+            # Lanza una ráfaga de 3 proyectiles diagonales
+            for i in range(3):
+                proyectil = abilities.AgisDiagonalProjectile(self.hitbox.centerx, self.hitbox.centery - 50, jugador.hitbox.centerx, jugador.hitbox.centery)
+                self.proyectiles.append(proyectil)
+
+        elif ataque_elegido == "ground_wave":
+            direccion = 1 if jugador.rect.centerx > self.rect.centerx else -1
+            proyectil = abilities.AgisGroundProjectile(self.rect.midbottom[0], self.rect.midbottom[1], direccion)
+            self.proyectiles.append(proyectil)

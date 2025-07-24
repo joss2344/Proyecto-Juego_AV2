@@ -43,7 +43,7 @@ class MazmorraP4Scene(GameScene):
             player_start,
             enemies_data,
             self.map_width, self.map_height,
-            next_scene_name="mazmorrap5"
+            next_scene_name="mazmorra_boss2"
         )
 
         self.name = "mazmorra_p4"

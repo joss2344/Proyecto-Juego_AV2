@@ -20,6 +20,6 @@ class MazmorraP6Scene(GameScene):
             screen, MAP_MAZMORRA_P6_PATH, platforms, # <-- CAMBIO AQUÍ
             [], [], player_start, enemies, 
             self.map_width, self.map_height, 
-            next_scene_name="mazmorra_boss2"
+            next_scene_name="mazmorra_boss3"
         )
         self.name = "mazmorra_p6"

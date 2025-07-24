@@ -1,8 +1,8 @@
 {
-    "last_scene": "mazmorra_p1",
+    "last_scene": "mazmorra_boss2",
     "progreso_llave": [
-        false,
-        false,
+        true,
+        true,
         false
     ],
     "personaje": "Lia"

@@ -91,3 +91,59 @@ class BreakableWall(InteractableObject):
         # Solo se dibuja si NO está roto
         if not self.is_active:
             surface.blit(self.image, (self.rect.x - offset_x, self.rect.y - offset_y))
+
+# En interactables.py (añadir al final)
+# En interactables.py
+
+class FinalChest(InteractableObject):
+    def __init__(self, x, y):
+        self.sheet = pygame.image.load(COFRE_FINAL_PATH).convert_alpha()
+        
+        # --- LÓGICA DE CARGA DE FRAMES CORREGIDA ---
+        # Asumimos que los frames del cofre son cuadrados (ancho = alto)
+        self.frame_height = self.sheet.get_height()
+        self.frame_width = self.frame_height 
+        
+        super().__init__(x, y, COFRE_WIDTH, COFRE_HEIGHT)
+        
+        self.sheet = pygame.image.load(COFRE_FINAL_PATH).convert_alpha()
+
+        self.frames = []
+        # Calcula el número de frames automáticamente para evitar errores
+        if self.frame_width > 0:
+            num_frames = self.sheet.get_width() // self.frame_width
+            for i in range(num_frames):
+                frame = self.sheet.subsurface((i * self.frame_width, 0, self.frame_width, self.frame_height))
+                self.frames.append(frame)
+        
+        # Si no se cargan frames, usa un placeholder para evitar crasheos
+        if not self.frames:
+            placeholder = pygame.Surface((48, 48)); placeholder.fill(MAGIC_BLUE)
+            self.frames.append(placeholder)
+            
+        self.current_frame = 0
+        self.is_opening = False
+        self.is_opened = False
+        self.last_update = 0
+        self.anim_speed = 80 # ms por frame
+
+    def interact(self, projectile=None):
+        if not self.is_opened and not self.is_opening:
+            self.is_opening = True
+
+    def update(self):
+        if self.is_opening and not self.is_opened:
+            now = pygame.time.get_ticks()
+            if now - self.last_update > self.anim_speed:
+                self.last_update = now
+                self.current_frame += 1
+                if self.current_frame >= len(self.frames):
+                    self.current_frame = len(self.frames) - 1
+                    self.is_opening = False
+                    self.is_opened = True
+
+    def draw(self, surface, offset_x, offset_y, zoom):
+        pos_x = self.rect.x - offset_x
+        pos_y = self.rect.y - offset_y
+        # Dibujamos el frame actual escalado al tamaño del rect
+        surface.blit(pygame.transform.scale(self.frames[self.current_frame], self.rect.size), (pos_x, pos_y))

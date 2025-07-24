@@ -7,6 +7,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
 # --- Colors --- #
 WHITE = (255, 255, 255); DARK_GREY = (50, 50, 50); MAGIC_BLUE = (80, 160, 255)
 RED_HEALTH = (255, 0, 0); GREEN_HEALTH = (0, 255, 0); BLACK = (0, 0, 0)
+LIGHT_GREY = (180, 180, 180)
 
 # --- Fonts --- #
 FONT_LARGE = pygame.font.SysFont("arial", 38); FONT_MEDIUM = pygame.font.SysFont("arial", 30)
@@ -21,15 +22,17 @@ PLAYER_WIDTH = 100; PLAYER_HEIGHT = 100
 ENEMY_WIDTH = 100; ENEMY_HEIGHT = 75 # Tamaño por defecto
 BOSS_WIDTH = 500; BOSS_HEIGHT = 500
 BOSS_HEALTH = 2000
+COFRE_WIDTH = 100; COFRE_HEIGHT = 100
 
 # --- Projectile Properties --- #
 ELEMENTAL_COOLDOWN = 500; SPECIAL_COOLDOWN = 2000
-
+COFRE_FINAL_PATH = "interactables/cofre_final.png"
 # --- Asset Paths --- #
 MENU_BACKGROUND_PATH = "interfaz/fondo.png"
 PLAYER_SPRITE_PATHS = {
     "Prota": "Characters/prota.png", "Lia": "Characters/lia.png",
-    "Kael": "Characters/kael.png", "Aria": "Characters/aria.png"
+    "Kael": "Characters/kael.png", "Aria": "Characters/aria.png",
+    
 }
 PLAYER_ANIMATION_DATA = {
     "Prota": {"idle": {"frames": 4}, "run": {"frames": 4}},
@@ -46,7 +49,8 @@ SKILL_ICON_PATHS = {
     "storm": "Skills/storm.png", "boss_fireball": "Skills/boss_fireball.png",
     "boss_groundwave": "Skills/boss_groundwave.png", "lightning_strike": "Skills/lightning_strike.png",
     "skeleton_sword": "Skills/skeleton_sword.png",
-    "hongo_proyectil": "Skills/hongo_proyectil.png"
+    "hongo_proyectil": "Skills/hongo_proyectil.png",
+    "boss3_proyectil": "Skills/boss3_proyectil.png",
 }
 
 
@@ -102,17 +106,29 @@ ENEMY_INFO = {
 
 # En constants.py, dentro de ENEMY_INFO
 
-    "nightborne": {
-        "health": 2500, "speed": 0, "death_sound": "sounds/muerte_jefe.wav", "scale": 2.5, "width": 200, "height": 180, "y_offset": 5, "hitbox_scale": (0.5, 0.9), "hitbox_offset": (0,0),
+
+        "nightborne": {
+        "health": 500, "speed": 2.2, "death_sound": "sounds/muerte_jefe.wav", # <-- VELOCIDAD AÑADIDA
+        "scale": 3.5, "width": 200, "height": 180, "y_offset": 5, "hitbox_scale": (0.5, 0.9), "hitbox_offset": (0,0),
         "is_boss": True,
-        "attack_damage": 40, "attack_damage_frame": 5,
-        # --- DATOS DE ANIMACIÓN FINALES ---
+        "attack_damage": 40, "attack_range": 150, "attack_damage_frame": 5, "detection_radius": 600, # <-- RANGOS AJUSTADOS
         "anim_data": {
-            # Asegúrate de que los nombres de archivo coincidan con los que guardaste
             "idle":   {"path": "Enemies/NightBorne/nightborne_idle.png",   "frames": 9},
             "walk":   {"path": "Enemies/NightBorne/nightborne_walk.png",   "frames": 6},
             "attack": {"path": "Enemies/NightBorne/nightborne_attack.png", "frames": 12},
             "die":    {"path": "Enemies/NightBorne/nightborne_die.png",    "frames": 21}
+        }
+    },
+# En constants.py, dentro de ENEMY_INFO
+
+    "agis": {
+        "health": 400, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
+        "scale": 1.0, "width": 100, "height": 180, "y_offset": 0, "hitbox_scale": (0.8, 1.0), "hitbox_offset": (0,0),
+        "is_boss": True,
+        "anim_data": {
+            "idle": {"path": "Enemies/Agis.png", "frames": 15},
+            # --- ANIMACIÓN DE MUERTE AÑADIDA ---
+            "die": {"path": "Enemies/agis_die.png", "frames": 8}
         }
     }
 
@@ -133,6 +149,7 @@ MAP_MAZMORRA_BOSS2_PATH = "fondos/mazmorra_boss2.png"
 
 MENU_MUSIC_PATH = "Soundtracks/menu.mp3"
 BOSS_MUSIC_PATH = "Soundtracks/soundtrackboss1.mp3"
+ENDING_MUSIC_PATH = "Soundtracks/ending.mp3" # <-- AÑADIR ESTA LÍNEA
 
 INITIAL_ZOOM = 0.85
 DEATH_QUOTES = [

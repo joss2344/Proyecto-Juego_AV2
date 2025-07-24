@@ -75,13 +75,41 @@ class AldeaScene(GameScene):
             player_start, aldea_enemies, 
             self.map_width, self.map_height, next_scene_name="mazmorra"
         )
-        
         self.name = "aldea"
-        self.dialogue_mission = DialogueBox(screen, text_lines=["..."], speaker_name="Anciano Sabio")
-        self.dialogue_pre_selection = DialogueBox(screen, text_lines=["..."], speaker_name="Anciano Sabio")
-        self.dialogue_after_selection = DialogueBox(screen, text_lines=["..."], speaker_name="Anciano Sabio")
+        
+        # --- DIÁLOGOS ACTUALIZADOS ---
+        self.dialogue_mission = DialogueBox(
+            screen,
+            text_lines=[
+                "Ancestrales ecos susurran tu nombre, Guardián.",
+                "La Llave Solar, antaño símbolo de armonía, yace ahora fragmentada por el velo oscuro del Clan Umbral.",
+                "Tu sendero te llama a la Mazmorra Suicida, más allá de estas tierras,",
+                "donde el primer fragmento aguarda. ¡Restáuralo!",
+                "El equilibrio del mundo pende de tu valor."
+            ],
+            speaker_name="Anciano Sabio"
+        )
+
+        self.dialogue_pre_selection = DialogueBox(
+            screen,
+            text_lines=[
+                "Para enfrentar la oscuridad, debes despertar tu verdadera esencia.",
+                "Elige ahora el espíritu elemental que guiará tu destino."
+            ],
+            speaker_name="Anciano Sabio"
+        )
+        self.dialogue_after_selection = DialogueBox(
+            screen,
+            text_lines=[
+                "Ahora, con tu espíritu elegido, tu camino hacia la Mazmorra Suicida está claro.",
+                "Encuentra el primer fragmento de la Llave Solar. ¡Ve con valor!"
+            ],
+            speaker_name="Anciano Sabio"
+        )
+
         self.elder_trigger_x = 1200; self.trigger_radius = 100
         self.dialogue_phase = 0; self.mission_dialogue_done = False; self.pre_selection_dialogue_done = False; self.selection_processed = False
+
 
     def update(self):
         global global_selected_character_g

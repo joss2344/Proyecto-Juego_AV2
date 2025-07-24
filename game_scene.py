@@ -186,18 +186,23 @@ class GameScene:
 
     def handle_input(self, evento):
         if self.is_paused:
-            accion = self.pause_menu.handle_event(evento, self.can_save)
+            # Prepara los datos a guardar ANTES de llamar a handle_event del menú de pausa
+            game_data_to_save = {
+                "last_scene": self.name,
+                "progreso_llave": self.progreso_llave,
+                "personaje": self.jugador.personaje
+            }
+            # Pasa los datos como un argumento a handle_event
+            accion = self.pause_menu.handle_event(evento, self.can_save, game_data_to_save) # <-- Esta línea es la que hay que revisar
+            
             if accion == "Continuar":
                 self.is_paused = False
             elif accion == "Salir al Menú":
                 self.running = False
                 self.next_scene_name = None # Para salir al menú principal
-            elif accion == "Guardar Partida":
-                if self.can_save:
-                    game_data = {"last_scene": self.name, "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
-                    save_game(game_data)
-                    self.can_save = False # Evitar guardado múltiple en el mismo punto
-                    self.is_paused = False
+            elif accion == "Guardado Exitoso": # Nuevo retorno del menú de pausa
+                self.can_save = False # Evitar guardado múltiple en el mismo punto
+                self.is_paused = False
         else:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_ESCAPE:
@@ -206,7 +211,6 @@ class GameScene:
                     self.jugador.atacar("elemental")
                 if evento.key == pygame.K_q and self.jugador.salud > 0:
                     self.jugador.atacar("special")
-
     def update(self):
         if self.is_paused: return
         if self.jugador.salud <= 0: self.respawn_player(); return
@@ -231,9 +235,10 @@ class GameScene:
             if self.jugador.rect.colliderect(checkpoint) and not self.can_save:
                 self.jugador.last_checkpoint = checkpoint.topleft
                 self.can_save = True
-                game_data = {"last_scene": self.name, "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
-                save_game(game_data)
-        
+                # --- ELIMINA LAS SIGUIENTES 2 LÍNEAS ---
+                # game_data = {"last_scene": self.name, "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
+                # save_game(game_data)
+                # --- FIN DE ELIMINACIÓN ---
         # Colisiones de Proyectiles del Jugador
         for proyectil in self.jugador.proyectiles[:]:
             proyectil.actualizar(self.offset_x)

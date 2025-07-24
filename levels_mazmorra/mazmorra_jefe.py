@@ -64,12 +64,12 @@ class MazmorraJefeScene(GameScene):
             dungeon_enemies,
             self.map_width, 
             self.map_height, 
-            next_scene_name="mazmorra_p4"
+            next_scene_name="mazmorra_p3"
         )
         
         # --- LÍNEA CORREGIDA PARA CREAR AL JEFE ---
         # Ahora se crea usando su nombre "boss1" desde ENEMY_INFO, como los demás enemigos.
-        boss_start_x = self.map_width - 400
+        boss_start_x = self.map_width - 300
         boss_start_y = 900 
         self.boss = Boss1(boss_start_x, boss_start_y, "boss1")
         self.enemigos.append(self.boss)

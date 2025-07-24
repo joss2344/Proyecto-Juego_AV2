@@ -36,7 +36,18 @@ class MazmorraScene(GameScene):
         self.music_path = "Soundtracks/soundtrack1.mp3"
         self.name = "mazmorra"
         
-        self.dialogue_entrance = DialogueBox(screen, text_lines=["..."], speaker_name="Ecos del Abismo")
+        # --- DIÁLOGO ACTUALIZADO ---
+        self.dialogue_entrance = DialogueBox(
+            screen,
+            text_lines=[
+                "Una oscuridad insondable te envuelve...",
+                "Adentrándose en la Mazmorra Suicida. Una vez dentro, no hay vuelta atrás.",
+                "Quizás no vivas para contarlo... quizás.",
+                "La suerte es un lujo que aquí no existe. Solo la voluntad de sobrevivir."
+            ],
+            speaker_name="Ecos del Abismo"
+        )
+
         self.dialogue_trigger_x = self.map_width - 500; self.trigger_radius = 150
         self.entrance_dialogue_triggered = False; self.game_paused_by_dialogue = False  
         self.entered_mazmorra_permanently = False 
@@ -44,8 +55,7 @@ class MazmorraScene(GameScene):
         self.transitioning_to_next_level = False; self.fade_alpha = 0; self.fade_speed = 5
         self.door_sound_played = False
 
-    # El resto de la clase (update, handle_input, draw) se mantiene igual
-    # ...
+
 
     def update(self):
         if self.is_paused: return

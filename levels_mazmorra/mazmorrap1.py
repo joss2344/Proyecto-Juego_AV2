@@ -20,7 +20,7 @@ class MazmorraP1Scene(GameScene):
             (600, ground_y, 200, "esqueleto"),
             (1200, ground_y-35, 250, "golem"),
             (1800, ground_y, 200, "esqueleto"),
-            (2400, ground_y, 150-25, "lobo"),
+            (2400, ground_y, 150-35, "lobo"),
         ]
         
         super().__init__(

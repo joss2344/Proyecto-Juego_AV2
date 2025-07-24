@@ -204,3 +204,53 @@ class NightBorneEruption(Proyectil):
     def actualizar(self, offset_x=None):
         if pygame.time.get_ticks() - self.creation_time > self.lifetime:
             self.activo = False
+
+# En abilities.py (añadir al final)
+
+class AgisFallingProjectile(Proyectil):
+    def __init__(self, target_x, ground_y):
+        # Nace arriba de la pantalla en la posición X del jugador
+        super().__init__(target_x, -50, 0) 
+        self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (20, 45))
+        self.rect = self.image.get_rect(center=(self.initial_x, self.initial_y))
+        self.danio = 25
+        self.velocidad = 18
+        self.ground_y = ground_y
+
+    def actualizar(self, offset_x=None):
+        self.rect.y += self.velocidad
+        # Se desactiva al tocar el suelo
+        if self.rect.bottom >= self.ground_y:
+            self.activo = False
+
+class AgisDiagonalProjectile(Proyectil):
+    def __init__(self, start_x, start_y, target_x, target_y):
+        super().__init__(start_x, start_y, 0)
+        self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (45, 20)), 45)
+        self.rect = self.image.get_rect(center=(start_x, start_y))
+        self.danio = 15
+        
+        dist_x = target_x - start_x
+        dist_y = target_y - start_y
+        distancia = math.hypot(dist_x, dist_y)
+        velocidad_total = 12
+        
+        if distancia > 0:
+            self.vel_x = (dist_x / distancia) * velocidad_total
+            self.vel_y = (dist_y / distancia) * velocidad_total
+        else:
+            self.vel_x = 0; self.vel_y = velocidad_total
+
+    def actualizar(self, offset_x=None):
+        self.rect.x += self.vel_x
+        self.rect.y += self.vel_y
+        if not pygame.Rect(0,0, SCREEN_WIDTH, SCREEN_HEIGHT).colliderect(self.rect.move(-offset_x, 0)):
+            self.activo = False
+
+class AgisGroundProjectile(Proyectil):
+    def __init__(self, x, y, direccion):
+        super().__init__(x, y, direccion)
+        self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (60, 30))
+        self.rect = self.image.get_rect(midbottom=(x, y))
+        self.velocidad = 8
+        self.danio = 20

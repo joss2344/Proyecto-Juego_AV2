@@ -28,7 +28,7 @@ class MazmorraP3Scene(GameScene):
         super().__init__(
             screen, MAP_MAZMORRA_P3_PATH, dungeon_platforms, dungeon_checkpoints,
             dungeon_interactables, player_start, dungeon_enemies,
-            self.map_width, self.map_height, next_scene_name="mazmorra_jefe"
+            self.map_width, self.map_height, next_scene_name="mazmorra_p4"
         )
         
         self.music_path = "Soundtracks/soundtrack2.mp3"
