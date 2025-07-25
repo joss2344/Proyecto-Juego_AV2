@@ -10,7 +10,6 @@ from levels_mazmorra.mazmorrap1 import MazmorraP1Scene
 from levels_mazmorra.mazmorrap2 import MazmorraP2Scene
 from levels_mazmorra.mazmorrap3 import MazmorraP3Scene
 from levels_mazmorra.mazmorrap4 import MazmorraP4Scene
-# --- CORRECCIÓN: SE ASEGURA DE QUE TODOS LOS NIVELES ESTÉN IMPORTADOS ---
 from levels_mazmorra.mazmorrap5 import MazmorraP5Scene
 from levels_mazmorra.mazmorra_jefe import MazmorraJefeScene
 from levels_mazmorra.mazmorrap6 import MazmorraP6Scene
@@ -24,7 +23,7 @@ pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Elemental Trinity")
 
-# --- CORRECCIÓN: MAPA DE ESCENAS COMPLETO Y ACTUALIZADO ---
+# ---MAPA DE ESCENAS   ---
 scene_map = {
     "bosque": BosqueScene,
     "aldea": AldeaScene,
@@ -33,19 +32,19 @@ scene_map = {
     "mazmorra_p2": MazmorraP2Scene,
     "mazmorra_p3": MazmorraP3Scene,
     "mazmorra_p4": MazmorraP4Scene,
-    "mazmorrap5": MazmorraP5Scene, # <-- Ahora sí está registrada
+    "mazmorrap5": MazmorraP5Scene, 
     "mazmorra_p6": MazmorraP6Scene,
     "mazmorra_jefe": MazmorraJefeScene,
     "mazmorra_boss2": MazmorraBoss2Scene,
     "mazmorra_boss3": MazmorraBoss3Scene,
-    "credits": CreditsScene, # <-- LÍNEA AÑADIDA
+    "credits": CreditsScene, 
 }
 
 def show_credits():
-    stop_menu_music() # Detiene la música del menú
+    stop_menu_music() 
     credits_scene = CreditsScene(screen)
     credits_scene.run()
-    play_menu_music() #
+    play_menu_music() 
 
 progreso_llave = [False, False, False]
 global_selected_character_g = "Prota"
@@ -62,11 +61,10 @@ def run_game_loop(start_scene_name, character, key_progress):
 
     while next_scene_name:
         # --- LÓGICA CORREGIDA PARA MANEJAR LA ESCENA DE CRÉDITOS ---
-        # Si la siguiente escena es la de créditos, la manejamos como un caso especial.
         if next_scene_name == "credits":
             credits_scene = CreditsScene(screen)
             credits_scene.run()
-            break # Rompemos el bucle para volver al menú principal
+            break 
             
         current_scene_class = scene_map.get(next_scene_name)
         if not current_scene_class:
@@ -74,7 +72,6 @@ def run_game_loop(start_scene_name, character, key_progress):
             break
         
         current_scene = current_scene_class(screen)
-        # Esto ya no dará error, porque nunca se llamará para la escena de créditos
         current_scene.set_key_progress(progreso_llave)
         current_scene.name = next_scene_name
         
@@ -122,14 +119,14 @@ def main_menu():
     fondo_menu = pygame.image.load(MENU_BACKGROUND_PATH).convert()
     fondo_menu = pygame.transform.scale(fondo_menu, (SCREEN_WIDTH, SCREEN_HEIGHT))
     
-    # --- DICCIONARIO DE BOTONES ACTUALIZADO ---
+    # --- DICCIONARIO DE BOTONES  ---
     botones = {
         "Nueva Partida":  {"accion": start_new_game},
         "Cargar Partida": {"accion": load_and_start_game},
-        "Créditos":       {"accion": show_credits}, # <-- Botón añadido
+        "Créditos":       {"accion": show_credits}, 
         "Salir":          {"accion": quit_game}
     }
-    y_pos = SCREEN_HEIGHT // 2 - 40 # Ajustamos la posición inicial para que quepan más botones
+    y_pos = SCREEN_HEIGHT // 2 - 40 
     for nombre, data in botones.items():
         texto_surf = FONT_LARGE.render(nombre, True, WHITE)
         data["rect"] = texto_surf.get_rect(center=(SCREEN_WIDTH // 2, y_pos))
@@ -151,7 +148,6 @@ def main_menu():
                 if botones["Nueva Partida"]["rect"].collidepoint(evento.pos): start_new_game()
                 if botones["Cargar Partida"]["rect"].collidepoint(evento.pos):
                     if get_saved_games(): load_and_start_game()
-                # --- MANEJO DEL CLIC EN EL NUEVO BOTÓN ---
                 if botones["Créditos"]["rect"].collidepoint(evento.pos): show_credits()
                 if botones["Salir"]["rect"].collidepoint(evento.pos): quit_game()
         pygame.display.flip()

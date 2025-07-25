@@ -3,7 +3,6 @@ import random
 from constants import *
 
 class Particle:
-    # CORRECCIÓN: Se añaden los guiones bajos a __init__
     def __init__(self, x, y, color):
         self.x = x
         self.y = y
@@ -25,7 +24,6 @@ class Particle:
         pygame.draw.rect(surface, self.color, (pos_x, pos_y, self.size * zoom, self.size * zoom))
 
 class HitSplat:
-    # CORRECCIÓN: Se añaden los guiones bajos a __init__
     def __init__(self, x, y, color=(200, 20, 20)):
         self.particles = [Particle(x, y, color) for _ in range(15)]
 

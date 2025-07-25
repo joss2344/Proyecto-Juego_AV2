@@ -11,11 +11,9 @@ class MazmorraP5Scene(GameScene):
         # Ajustamos la altura base del suelo para que coincida con el fondo
         ground_y = 805
 
-        # --- PLATAFORMAS CON ALTURA CORREGIDA ---
-        # Recalculadas para alinearse con los ladrillos del fondo
+        # --- PLATAFORMAS AJUSTADAS EN ALTURA Y SEPARACIÓN ---
         suelo_y = ground_y +20
         platforms = [
-            # Suelo principal y continuo (ligeramente subido)
             pygame.Rect(0, suelo_y, self.map_width, 50),
 
         ]
@@ -26,11 +24,11 @@ class MazmorraP5Scene(GameScene):
 
         # --- ENEMIGOS REUBICADOS Y NUEVO GOLEM AÑADIDO ---
         enemies_data = [
-            (500, ground_y - 30, 0, "jades"),                # Jade sobre su plataforma
-            (1750, ground_y - 250, 300, "wizzardblue"),      # Fantasma flotando sobre su plataforma
-            (1200, ground_y, 400, "depredator"),             # Depredador en el suelo
-            (2600, ground_y, 200, "fire"),                   # Fire en el suelo
-            (1050, ground_y, 300-25, "golem_2"),                # <-- NUEVO GOLEM AÑADIDO
+            (500, ground_y - 30, 0, "jades"),              
+            (1750, ground_y - 250, 300, "wizzardblue"),     
+            (1200, ground_y, 400, "depredator"),            
+            (2600, ground_y-20, 200, "fire"),                  
+            (1050, ground_y, 300-25, "golem_2"),               
         ]
         
         super().__init__(

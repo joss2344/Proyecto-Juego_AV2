@@ -11,8 +11,8 @@ class DialogueBox:
         self.active = False
         self.finished = False
 
-        self.font = FONT_SMALL # Considera usar FONT_DIALOGUE_TEXT
-        self.speaker_font = FONT_MEDIUM # Considera usar FONT_DIALOGUE_SPEAKER
+        self.font = FONT_SMALL
+        self.speaker_font = FONT_MEDIUM 
 
         self.width = SCREEN_WIDTH * 0.8
         self.height = SCREEN_HEIGHT * 0.2
@@ -25,7 +25,7 @@ class DialogueBox:
 
         self.advance_text = False
         self.clock = pygame.time.Clock()
-        self.typing_speed = 30 # ms por caracter
+        self.typing_speed = 30 
         self.current_char_index = 0
         self.current_display_text = ""
 

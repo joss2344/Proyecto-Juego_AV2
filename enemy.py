@@ -5,7 +5,6 @@ import math
 from constants import *
 import abilities 
 import spritesheet
-# --- IMPORT AÑADIDO Y CORREGIDO ---
 from abilities import NightBorneHomingOrb
 
 class Enemigo:
@@ -58,8 +57,6 @@ class Enemigo:
         self.death_sound = self._load_sound(self.enemy_info.get("death_sound"))
 
     def _load_animations(self):
-        # --- LÓGICA DE CARGA DE ANIMACIONES CORREGIDA Y UNIFICADA ---
-
         # Caso 1: Enemigo sin animaciones (ej. "lobo"). Usa una sola imagen estática.
         if not self.anim_data:
             if "sprite_path" in self.enemy_info:
@@ -70,7 +67,7 @@ class Enemigo:
                     self.animations['static'] = [scaled_img]
                 except pygame.error:
                     print(f"⚠️ No se pudo cargar la imagen estática: {path}")
-            return # Termina la función aquí para estos enemigos.
+            return 
 
         # Caso 2: Hoja de sprites compleja con varias animaciones (ej. "nightborne")
         if "animations" in self.anim_data:
@@ -274,7 +271,7 @@ class Boss1(Enemigo):
             print(f"ERROR: No se encontró la información para el jefe '{enemy_name}'")
             sys.exit()
         super().__init__(x, y, 0, enemy_info)
-        self.attack_cooldown = 1800
+        self.attack_cooldown = 1600
         self.last_attack_time = pygame.time.get_ticks()
         self.ataques_disponibles = ["diagonal", "suelo", "multiple"]
 
@@ -310,7 +307,6 @@ class Boss1(Enemigo):
                 self.proyectiles.append(nuevo_proyectil)
 
 
-# En enemy.py (añadir al final)
 
 class Boss2(Enemigo):
     def __init__(self, x, y, enemy_name):
@@ -380,8 +376,6 @@ class Boss2(Enemigo):
         self.frame_index = 0
         self.last_attack_time = pygame.time.get_ticks()
 
-
-# En enemy.py
 
 class Boss3(Enemigo):
     def __init__(self, x, y, enemy_name):

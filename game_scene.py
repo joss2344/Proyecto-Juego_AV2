@@ -4,7 +4,7 @@ import math
 import random
 from constants import *
 from player import Jugador
-from enemy import Enemigo, FlyingEnemy # Asegúrate de que FlyingEnemy exista en enemy.py si lo usas
+from enemy import Enemigo, FlyingEnemy 
 from effects import HitSplat
 from ui import PauseMenu, DeathScreenQuote
 from game_state import save_game
@@ -186,23 +186,22 @@ class GameScene:
 
     def handle_input(self, evento):
         if self.is_paused:
-            # Prepara los datos a guardar ANTES de llamar a handle_event del menú de pausa
             game_data_to_save = {
                 "last_scene": self.name,
                 "progreso_llave": self.progreso_llave,
                 "personaje": self.jugador.personaje
             }
-            # Pasa los datos como un argumento a handle_event
-            accion = self.pause_menu.handle_event(evento, self.can_save, game_data_to_save) # <-- Esta línea es la que hay que revisar
+            accion = self.pause_menu.handle_event(evento, self.can_save, game_data_to_save)
             
             if accion == "Continuar":
                 self.is_paused = False
             elif accion == "Salir al Menú":
                 self.running = False
-                self.next_scene_name = None # Para salir al menú principal
-            elif accion == "Guardado Exitoso": # Nuevo retorno del menú de pausa
-                self.can_save = False # Evitar guardado múltiple en el mismo punto
+                self.next_scene_name = None
+            elif accion == "Guardado Exitoso": 
+                self.can_save = False 
                 self.is_paused = False
+
         else:
             if evento.type == pygame.KEYDOWN:
                 if evento.key == pygame.K_ESCAPE:
@@ -230,15 +229,12 @@ class GameScene:
         for enemigo in self.enemigos:
             enemigo.actualizar(self.jugador)
         
-        # Lógica de checkpoints
+# Lógica de checkpoints
         for checkpoint in self.checkpoints:
             if self.jugador.rect.colliderect(checkpoint) and not self.can_save:
                 self.jugador.last_checkpoint = checkpoint.topleft
                 self.can_save = True
-                # --- ELIMINA LAS SIGUIENTES 2 LÍNEAS ---
-                # game_data = {"last_scene": self.name, "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
-                # save_game(game_data)
-                # --- FIN DE ELIMINACIÓN ---
+
         # Colisiones de Proyectiles del Jugador
         for proyectil in self.jugador.proyectiles[:]:
             proyectil.actualizar(self.offset_x)

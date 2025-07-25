@@ -5,7 +5,7 @@ from constants import *
 from enemy import Boss2
 from ui import BossHealthBar
 from dialogue import DialogueBox
-from game_state import save_game # <-- CORRECCIÓN: El archivo se llama game_state
+from game_state import save_game 
 
 class MazmorraBoss2Scene(GameScene):
     def __init__(self, screen):
@@ -19,7 +19,7 @@ class MazmorraBoss2Scene(GameScene):
             screen, MAP_MAZMORRA_BOSS2_PATH, platforms,
             [], [], player_start, [], 
             self.map_width, self.map_height, 
-            next_scene_name="mazmorrap5" # <-- CAMBIO CLAVE AQUÍ
+            next_scene_name="mazmorrap5" 
         )
         self.name = "mazmorra_boss2"
         self.music_path = BOSS_MUSIC_PATH

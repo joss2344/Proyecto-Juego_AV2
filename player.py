@@ -11,8 +11,6 @@ class Jugador:
         self.personaje = personaje
 
                 # --- CREACIÓN DE LA HITBOX DEL JUGADOR ---
-        # Creamos una hitbox 10 píxeles más estrecha y 5 más baja que el rect principal
-        # El método inflate() quita de ambos lados, por lo que -10 quita 5 de la izq y 5 de la der.
         self.hitbox = self.rect.inflate(-10, -5)
         
         self.animation_frames = {}; self.action = 'idle'; self.current_frame_index = 0
@@ -134,7 +132,6 @@ class Jugador:
 
         self.rect.clamp_ip(pygame.Rect(0, 0, map_width, map_height))
                 # --- ACTUALIZACIÓN DE LA HITBOX ---
-        # Hacemos que la hitbox siga siempre al personaje
         self.hitbox.center = self.rect.center
         self._handle_animation()
 
@@ -187,14 +184,8 @@ class Jugador:
                 if self.sonidos_habilidad["Aria_Q"]: self.sonidos_habilidad["Aria_Q"].play()
 
     def tomar_danio(self, cantidad):
-
-
-        # Usamos abs() para obtener el valor absoluto
         cantidad_real = abs(cantidad)
-
-
         self.salud -= cantidad_real
-
 
         male_characters = ["Prota", "Kael"]
         if self.personaje in male_characters:
@@ -209,8 +200,7 @@ class Jugador:
         if self.image:
             imagen_a_dibujar = self.image if self.facing_right else pygame.transform.flip(self.image, True, False)
             
-            # --- LÓGICA DE DIBUJADO CORREGIDA ---
-            # Calcula la posición y el tamaño final en pantalla aplicando el zoom
+            # --- LÓGICA DE DIBUJADO  ---
             render_pos_x = (self.rect.x - offset_x) * zoom
             render_pos_y = (self.rect.y - offset_y) * zoom
             render_width = self.width * zoom

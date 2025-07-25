@@ -17,10 +17,10 @@ class MazmorraP1Scene(GameScene):
         
         # --- LISTA SIMPLIFICADA ---
         dungeon_enemies = [
-            (600, ground_y, 200, "esqueleto"),
-            (1200, ground_y-35, 250, "golem"),
-            (1800, ground_y, 200, "esqueleto"),
-            (2400, ground_y, 150-35, "lobo"),
+            (600, ground_y-50, 200, "esqueleto"),
+            (1200, ground_y-55, 250, "golem"),
+            (1800, ground_y-50, 200, "esqueleto"),
+            (2400, ground_y-50, 150-65, "lobo"),
         ]
         
         super().__init__(

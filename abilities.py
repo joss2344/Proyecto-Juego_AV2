@@ -111,17 +111,16 @@ class BossGroundProjectile(Proyectil):
     def __init__(self, x, y, direccion):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss_groundwave"]).convert_alpha(), (60, 30))
-        self.rect = self.image.get_rect(midbottom=(x, y)); self.velocidad = 6; self.danio = 5
+        self.rect = self.image.get_rect(midbottom=(x, y)); self.velocidad = 8; self.danio = 5
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
-# En abilities.py (añadir al final)
+
 
 class WizzardBlueProjectile(Proyectil):
     def __init__(self, start_x, start_y, target_x, target_y):
         super().__init__(start_x, start_y, 0)
-        # NOTA: Debes crear una imagen para el proyectil o usar una que ya tengas.
-        # Por ahora, usaremos una imagen de placeholder que tienes.
+
         try:
             self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["ice"]).convert_alpha(), (25, 25))
         except pygame.error: # Si falla, crea un círculo
@@ -161,7 +160,7 @@ class WizzardBlueProjectile(Proyectil):
             s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
 
-# En abilities.py (añadir al final)
+
 
 class NightBorneHomingOrb(Proyectil):
     def __init__(self, start_x, start_y, jugador):
@@ -172,7 +171,7 @@ class NightBorneHomingOrb(Proyectil):
         pygame.draw.circle(self.image, (50, 0, 80), (12, 12), 8)
         self.rect = self.image.get_rect(center=(start_x, start_y))
         self.danio = 20
-        self.velocidad = 2.5 # Es lento para que se pueda esquivar
+        self.velocidad = 4.5 # Es lento para que se pueda esquivar
         self.lifetime = 8000 # 8 segundos de vida
         self.creation_time = pygame.time.get_ticks()
 
@@ -205,7 +204,6 @@ class NightBorneEruption(Proyectil):
         if pygame.time.get_ticks() - self.creation_time > self.lifetime:
             self.activo = False
 
-# En abilities.py (añadir al final)
 
 class AgisFallingProjectile(Proyectil):
     def __init__(self, target_x, ground_y):

@@ -10,27 +10,26 @@ class MazmorraP4Scene(GameScene):
         ground_y = 750
 
         # --- PLATAFORMAS AJUSTADAS EN ALTURA Y SEPARACIÓN ---
-        # Subimos ligeramente el suelo principal
         suelo_y = ground_y - 20
         platforms = [
-            # Suelo principal y continuo (ligeramente subido)
+            # Plataforma principal del suelo
             pygame.Rect(0, suelo_y, self.map_width, 50),
 
         ]
 
         checkpoints = [
-             pygame.Rect(1500, suelo_y - PLAYER_HEIGHT - 20, 100, 100) # Ajustado a la nueva altura del suelo
+             pygame.Rect(1500, suelo_y - PLAYER_HEIGHT - 20, 100, 100) 
         ]
 
         interactables = []
         player_start = (100, suelo_y - PLAYER_HEIGHT)
 
         # --- ENEMIGOS CON ALTURA REAJUSTADA ---
-        enemy_offset = -30 # Ajuste para que no estén demasiado enterrados en el suelo subido
+        enemy_offset = -45
 
         enemies_data = [
             (500, suelo_y + enemy_offset, 300, "depredator"),
-            (1150, suelo_y - 275, 100, "wizzardblue"), # Fantasma en su plataforma
+            (1150, suelo_y - 275, 100, "wizzardblue"),
             (1700, suelo_y + enemy_offset, 200, "fire"),
             (1950, suelo_y + enemy_offset, 200, "wind"),
             (2300, suelo_y + enemy_offset, 0, "jades"),

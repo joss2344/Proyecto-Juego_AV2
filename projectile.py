@@ -25,7 +25,6 @@ class Proyectil:
             self.activo = False
 
     def dibujar(self, superficie, offset_x, offset_y, zoom):
-        # Este es un método de dibujo de RESPALDO.
         # Dibuja un círculo blanco si una habilidad específica no tiene su propia imagen.
         if self.activo:
             pos_x = int((self.rect.x - offset_x) * zoom)

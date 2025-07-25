@@ -25,22 +25,22 @@ class MazmorraBoss3Scene(GameScene):
         self.name = "mazmorra_boss3"
         self.music_path = BOSS_MUSIC_PATH
 
-        self.boss_start_x = self.map_width - 300
-        self.boss_start_y = ground_y
+        self.boss_start_x = self.map_width - 200
+        self.boss_start_y = ground_y-80
         self.boss = Boss3(self.boss_start_x, self.boss_start_y, "agis")
         self.enemigos.append(self.boss)
         self.boss_health_bar = BossHealthBar(screen, self.boss, "Agis, Heraldo del Fin")
 
-        self.chest = FinalChest(self.boss_start_x, self.boss_start_y - COFRE_HEIGHT - 90)
+        self.chest = FinalChest(self.boss_start_x-270, self.boss_start_y - COFRE_HEIGHT-5 )
         
         self.dialogue_final = DialogueBox(screen, text_lines=[
             "Así que lo has logrado, mortal...",
-            "Has reunido los fragmentos que ni yo, el Heraldo de la Eternidad, podía tocar.",
+            "Has reunido los fragmentos que ni yo, el Heraldo de la Eternidad, podía tocar durante siglos...",
             "Mi castigo fue la inmortalidad, observar sin actuar.",
-            "Pero tú... tú has sido mi instrumento.",
+            "Pero tú... tú has sido mi instrumento, y si que has actuado.",
             "Ahora, con el poder de la Llave Solar, mi plan se pone en marcha.",
             "Este universo conocerá la verdadera eternidad... la del silencio.",
-            "No intentes detenerme. Ya es tarde."
+            "No intentes detenerme, ya es tarde, el mundo conocera mi verdadera forma...."
         ], speaker_name="¿Anciano Sabio?")
         
         self.sound_fragment_collected = self._load_sound("sounds/fragmento.wav")
@@ -84,7 +84,7 @@ class MazmorraBoss3Scene(GameScene):
                 self.game_state = "CHEST_APPEARS"
                 self.interactables.append(self.chest)
                 self.progreso_llave[2] = True
-                game_data = {"last_scene": "aldea", "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
+                game_data = {"last_scene": "mazmorra_boss3", "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
                 save_game(game_data)
         
         # ESTADO 3: Cofre en Escena
@@ -93,7 +93,7 @@ class MazmorraBoss3Scene(GameScene):
             if self.jugador.rect.colliderect(self.chest.rect.inflate(40, 40)):
                 if self.sound_fragment_collected: self.sound_fragment_collected.play()
                 self.dialogue_final.start()
-                self.game_state = "DIALOGUE" # Pasamos al estado de diálogo
+                self.game_state = "DIALOGUE" 
 
     def handle_input(self, evento):
         # El input solo lo maneja el diálogo si está activo

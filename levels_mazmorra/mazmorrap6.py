@@ -12,12 +12,12 @@ class MazmorraP6Scene(GameScene):
         platforms = [pygame.Rect(0, ground_y, self.map_width, 50)]
         player_start = (100, ground_y - PLAYER_HEIGHT)
         enemies = [
-            (800, ground_y, 300, "golem_2"), # <-- Usando el nuevo enemigo
-            (1600, ground_y, 200, "golem_2"),
+            (800, ground_y-60, 300, "golem_2"), 
+            (1600, ground_y-60, 200, "golem_2"),
         ]
 
         super().__init__(
-            screen, MAP_MAZMORRA_P6_PATH, platforms, # <-- CAMBIO AQUÍ
+            screen, MAP_MAZMORRA_P6_PATH, platforms,
             [], [], player_start, enemies, 
             self.map_width, self.map_height, 
             next_scene_name="mazmorra_boss3"

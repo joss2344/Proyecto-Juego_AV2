@@ -92,9 +92,6 @@ class BreakableWall(InteractableObject):
         if not self.is_active:
             surface.blit(self.image, (self.rect.x - offset_x, self.rect.y - offset_y))
 
-# En interactables.py (añadir al final)
-# En interactables.py
-
 class FinalChest(InteractableObject):
     def __init__(self, x, y):
         self.sheet = pygame.image.load(COFRE_FINAL_PATH).convert_alpha()
@@ -145,5 +142,4 @@ class FinalChest(InteractableObject):
     def draw(self, surface, offset_x, offset_y, zoom):
         pos_x = self.rect.x - offset_x
         pos_y = self.rect.y - offset_y
-        # Dibujamos el frame actual escalado al tamaño del rect
         surface.blit(pygame.transform.scale(self.frames[self.current_frame], self.rect.size), (pos_x, pos_y))

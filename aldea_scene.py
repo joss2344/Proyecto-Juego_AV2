@@ -9,7 +9,6 @@ from interactables import *
 global_selected_character_g = "Prota"
 
 class CharacterSelectSceneInGame:
-    # ... (Esta clase no cambia, puedes mantener la que tienes)
     def __init__(self, screen, characters):
         self.screen = screen; self.running = True; self.selected_character = None
         self.characters = characters; self.reloj = pygame.time.Clock()
@@ -62,7 +61,7 @@ class AldeaScene(GameScene):
     def __init__(self, screen):
         self.map_width = 2500; self.map_height = 830
         ground_y_aldea = 640
-        aldea_platforms = [ pygame.Rect(0, ground_y_aldea, self.map_width, 50) ]
+        aldea_platforms = [ pygame.Rect(0, ground_y_aldea+10, self.map_width, 50) ]
         aldea_checkpoints = []
         aldea_interactables = [] # La aldea no tiene puzles
         player_start = (100, ground_y_aldea - PLAYER_HEIGHT + 50)
@@ -77,7 +76,7 @@ class AldeaScene(GameScene):
         )
         self.name = "aldea"
         
-        # --- DIÁLOGOS ACTUALIZADOS ---
+        # --- DIÁLOGOS  ---
         self.dialogue_mission = DialogueBox(
             screen,
             text_lines=[
@@ -113,31 +112,54 @@ class AldeaScene(GameScene):
 
     def update(self):
         global global_selected_character_g
-        if self.jugador.salud <= 0: self.respawn_player(); return
 
-        if self.dialogue_phase == 1: 
-            self.dialogue_mission.update(); self.jugador.vel_x = 0; self.jugador.vel_y = 0
-            if self.dialogue_mission.finished: self.mission_dialogue_done = True; self.dialogue_phase = 2; self.dialogue_pre_selection.start()
+        if self.jugador.salud <= 0:
+            self.respawn_player()
+            return
+
+        if self.dialogue_phase == 1:
+            self.dialogue_mission.update()
+            self.jugador.vel_x = 0
+            self.jugador.vel_y = 0
+            if self.dialogue_mission.finished:
+                self.mission_dialogue_done = True
+                self.dialogue_phase = 2
+                self.dialogue_pre_selection.start()
+
         elif self.dialogue_phase == 2:
-            self.dialogue_pre_selection.update(); self.jugador.vel_x = 0; self.jugador.vel_y = 0
-            if self.dialogue_pre_selection.finished: self.pre_selection_dialogue_done = True; self.dialogue_phase = 3
-        elif self.dialogue_phase == 3: 
+            self.dialogue_pre_selection.update()
+            self.jugador.vel_x = 0
+            self.jugador.vel_y = 0
+            if self.dialogue_pre_selection.finished:
+                self.pre_selection_dialogue_done = True
+                self.dialogue_phase = 3
+
+        elif self.dialogue_phase == 3:
             if not self.selection_processed:
                 character_select = CharacterSelectSceneInGame(self.screen, ["Lia", "Kael", "Aria"])
                 chosen_char = character_select.run()
                 if chosen_char:
                     global_selected_character_g = chosen_char
                     self.jugador.cambiar_personaje(global_selected_character_g)
-                self.selection_processed = True; self.dialogue_phase = 4; self.dialogue_after_selection.start() 
-            else: self.dialogue_phase = 4 
-        elif self.dialogue_phase == 4: 
-            self.dialogue_after_selection.update(); self.jugador.vel_x = 0; self.jugador.vel_y = 0
-            if self.dialogue_after_selection.finished: self.dialogue_phase = 5 
+                self.selection_processed = True
+                self.dialogue_phase = 4
+                self.dialogue_after_selection.start()
+            else:
+                self.dialogue_phase = 4
+
+        elif self.dialogue_phase == 4:
+            self.dialogue_after_selection.update()
+            self.jugador.vel_x = 0
+            self.jugador.vel_y = 0
+            if self.dialogue_after_selection.finished:
+                self.dialogue_phase = 5
+
         else:
             super().update()
             distance_to_elder = abs(self.jugador.rect.centerx - self.elder_trigger_x)
             if self.dialogue_phase == 0 and distance_to_elder <= self.trigger_radius:
-                self.dialogue_phase = 1; self.dialogue_mission.start()
+                self.dialogue_phase = 1
+                self.dialogue_mission.start()
         
     def handle_input(self, evento):
         if self.is_paused:

@@ -2,10 +2,10 @@ import json
 import os
 from datetime import datetime
 
-SAVES_DIR = "saves" # El nombre de nuestra carpeta de guardado
+SAVES_DIR = "saves" 
 
 # --- MODIFICAR LA FUNCIÓN save_game ---
-def save_game(data, custom_name=None): # Añadir custom_name con valor por defecto None
+def save_game(data, custom_name=None): 
     """Guarda el estado del juego en un nuevo archivo con fecha y hora, o un nombre personalizado."""
     # 1. Asegura que la carpeta 'saves' exista
     if not os.path.exists(SAVES_DIR): #
@@ -14,7 +14,6 @@ def save_game(data, custom_name=None): # Añadir custom_name con valor por defec
     # 2. Crea un nombre de archivo único
     if custom_name: #
         # Asegurarse de que el nombre sea seguro para el sistema de archivos
-        # y añadir la extensión .json si no la tiene
         safe_name = "".join(c for c in custom_name if c.isalnum() or c in (' ', '_', '-')).strip() #
         if not safe_name: # Si el nombre resulta vacío después de limpiar
             timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") #
