@@ -57,7 +57,7 @@ SKILL_ICON_PATHS = {
 
 ## --- DICCIONARIO CENTRAL DE ENEMIGOS ---
 ENEMY_INFO = {
-    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 0.4, "scale": 0.3, "width": 45, "height": 30, "y_offset": 0, "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), "sprite_path": "Enemies/lobos.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
+    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, "width": 45, "height": 30, "y_offset": 0, "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), "sprite_path": "Enemies/lobos.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
     "depredator": {"health": 50, "speed": 2,   "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
     "fire":       {"health": 40, "speed": 1.8, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/fire.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
     "jades":      {"health": 80, "speed": 1.5, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},

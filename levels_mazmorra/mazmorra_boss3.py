@@ -26,7 +26,7 @@ class MazmorraBoss3Scene(GameScene):
         self.music_path = BOSS_MUSIC_PATH
 
         self.boss_start_x = self.map_width - 200
-        self.boss_start_y = ground_y-80
+        self.boss_start_y = ground_y-60
         self.boss = Boss3(self.boss_start_x, self.boss_start_y, "agis")
         self.enemigos.append(self.boss)
         self.boss_health_bar = BossHealthBar(screen, self.boss, "Agis, Heraldo del Fin")
@@ -84,7 +84,7 @@ class MazmorraBoss3Scene(GameScene):
                 self.game_state = "CHEST_APPEARS"
                 self.interactables.append(self.chest)
                 self.progreso_llave[2] = True
-                game_data = {"last_scene": "mazmorra_boss3", "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje}
+                game_data = {"last_scene": "mazmorra_boss3", "progreso_llave": self.progreso_llave, "personaje": self.jugador.personaje, self.game_state=="BOOS_DEAD": True}
                 save_game(game_data)
         
         # ESTADO 3: Cofre en Escena

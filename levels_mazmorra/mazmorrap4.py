@@ -32,7 +32,7 @@ class MazmorraP4Scene(GameScene):
             (1150, suelo_y - 275, 100, "wizzardblue"),
             (1700, suelo_y + enemy_offset, 200, "fire"),
             (1950, suelo_y + enemy_offset, 200, "wind"),
-            (2300, suelo_y + enemy_offset, 0, "jades"),
+            (2300, suelo_y + enemy_offset, 150, "jades"),
         ]
 
         super().__init__(

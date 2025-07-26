@@ -20,7 +20,7 @@ class BosqueScene(GameScene):
         
         # --- LISTA ENEMIGOS ---
         bosque_enemies = [
-            (400, ground_y-50, 200, "lobo"),
+            (400, ground_y-50, 600, "lobo"),
             (1000, ground_y-50, 600, "lobo"),
             (600, ground_y-50, 600, "esqueleto"),
         ]

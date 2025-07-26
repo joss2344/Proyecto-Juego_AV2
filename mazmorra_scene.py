@@ -20,9 +20,9 @@ class MazmorraScene(GameScene):
         
         # --- LISTA SIMPLIFICADA ---
         self.initial_enemies_data = [
-            (400, ground_y_mazmorra-45, 200, "lobo"),
-            (800, ground_y_mazmorra-45, 300, "lobo"),
-            (1300, ground_y_mazmorra-45, 250, "lobo"),
+            (400, ground_y_mazmorra-45, 600, "lobo"),
+            (800, ground_y_mazmorra-45, 600, "lobo"),
+            (1300, ground_y_mazmorra-45, 600, "lobo"),
         ]
         
         super().__init__(
@@ -36,7 +36,7 @@ class MazmorraScene(GameScene):
         self.music_path = "Soundtracks/soundtrack1.mp3"
         self.name = "mazmorra"
         
-        # --- DIÁLOGO ACTUALIZADO ---
+        # --- DIÁLOGO  ---
         self.dialogue_entrance = DialogueBox(
             screen,
             text_lines=[
@@ -56,33 +56,34 @@ class MazmorraScene(GameScene):
         self.door_sound_played = False
 
 
-
     def update(self):
+        # Lógica para la pausa y la muerte del jugador
         if self.is_paused: return
         if self.jugador.salud <= 0:
             self.respawn_player(); return
             
+        # Lógica del diálogo de entrada (congela el juego)
         if self.dialogue_entrance.active:
-            self.dialogue_entrance.update(); self.jugador.vel_x = 0; self.jugador.vel_y = 0; return
+            self.dialogue_entrance.update()
+            self.jugador.vel_x = 0
+            self.jugador.vel_y = 0
+            return
             
-        if self.entrance_dialogue_triggered and self.dialogue_entrance.finished and not self.transitioning_to_next_level:
-            self.entered_mazmorra_permanently = True; self.transitioning_to_next_level = True
-            self.stop_background_music()
-            
+        # Lógica de la transición al final del nivel 
         if self.transitioning_to_next_level:
             if self.door_sound and not self.door_sound_played: self.door_sound.play(); self.door_sound_played = True
             self.fade_alpha += self.fade_speed
             if self.fade_alpha >= 255: self.fade_alpha = 255; self.running = False
             self.jugador.vel_x = 0; self.jugador.vel_y = 0; return
         
+        # Ejecuta toda la lógica normal del juego 
         super().update()
         
+        # Lógica para activar el diálogo al final del nivel
         distance_to_trigger = abs(self.jugador.rect.centerx - self.dialogue_trigger_x)
         if not self.entrance_dialogue_triggered and distance_to_trigger <= self.trigger_radius:
-            self.dialogue_entrance.start(); self.entrance_dialogue_triggered = True
-            
-        if self.entered_mazmorra_permanently and self.jugador.rect.left < self.dialogue_trigger_x:
-            if self.jugador.vel_x < 0: self.jugador.rect.left = self.dialogue_trigger_x
+            self.dialogue_entrance.start()
+            self.entrance_dialogue_triggered = True
 
     def handle_input(self, evento):
         if self.is_paused:
