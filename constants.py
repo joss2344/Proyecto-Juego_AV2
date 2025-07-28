@@ -57,11 +57,11 @@ SKILL_ICON_PATHS = {
 
 ## --- DICCIONARIO CENTRAL DE ENEMIGOS ---
 ENEMY_INFO = {
-    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, "width": 45, "height": 30, "y_offset": 0, "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), "sprite_path": "Enemies/lobos.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
-    "depredator": {"health": 50, "speed": 2,   "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
-    "fire":       {"health": 40, "speed": 1.8, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/fire.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
-    "jades":      {"health": 80, "speed": 1.5, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
-    "wind":       {"health": 35, "speed": 2.2, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/wind.png","detection_radius": 300, "death_sound": "sounds/lobodeath.mp3"},
+    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, "width": 45, "height": 30, "y_offset": 0, "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), "sprite_path": "Enemies/lobos.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "depredator": {"health": 50, "speed": 2,   "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "fire":       {"health": 40, "speed": 1.8, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/fire.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "jades":      {"health": 80, "speed": 1.5, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "wind":       {"health": 35, "speed": 2.2, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/wind.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     
     "esqueleto": {
         "health": 60, "speed": 1.5, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 2.0, "width": 60, "height": 90, "y_offset": 0, "hitbox_scale": (0.8, 0.9), "hitbox_offset": (0, 0),
@@ -86,7 +86,6 @@ ENEMY_INFO = {
         "is_flying": True, "is_ranged": True, 
         "sprite_path": "Enemies/wizzardblue.png"
     },
-
     "golem_2": {
         "health": 180, "speed": 1.2, "death_sound": "sounds/muerte_golem.wav", "scale": 4, "width": 130, "height": 120, "y_offset": 5, "hitbox_scale": (1.3,2.0), "hitbox_offset": (0, 0),
         "attack_damage": 30, "attack_range": 200, "attack_cooldown": 2500, "attack_damage_frame": 6, "detection_radius": 400,
@@ -96,8 +95,7 @@ ENEMY_INFO = {
             "attack": {"path": "Enemies/golemcito/Golem_2_attack.png", "frames": 11},
             "die":    {"path": "Enemies/golemcito/Golem_2_die.png",    "frames": 13}
         }
-        },
-
+    },
     "boss1": {
         "health": BOSS_HEALTH, "speed": 0, "death_sound": "sounds/muerte_jefe.wav", "scale": 1.0, "width": 250, "height": 250, "y_offset": 50, "hitbox_scale": (1.3, 4.0), "hitbox_offset": (0,0),
         "sprite_path": "Enemies/boss1.png",
