@@ -19,7 +19,7 @@ class MazmorraBoss2Scene(GameScene):
             screen, MAP_MAZMORRA_BOSS2_PATH, platforms,
             [], [], player_start, [], 
             self.map_width, self.map_height, 
-            next_scene_name="mazmorrap5" 
+            next_scene_name="mazmorra_p5" 
         )
         self.name = "mazmorra_boss2"
         self.music_path = BOSS_MUSIC_PATH

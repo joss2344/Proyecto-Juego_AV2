@@ -1,7 +1,7 @@
 {
-    "last_scene": "mazmorra_boss2",
+    "last_scene": "aldea",
     "progreso_llave": [
-        false,
+        true,
         true,
         false
     ],

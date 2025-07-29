@@ -12,31 +12,26 @@ class MazmorraJefeScene(GameScene):
         self.map_width = 1920
         self.map_height = 1080
         
-        dungeon_platforms = [ pygame.Rect(0, 900, self.map_width, 50) ]
+        ground_y = 900 # <-- Altura del suelo
+        dungeon_platforms = [ pygame.Rect(0, ground_y, self.map_width, 50) ]
         dungeon_checkpoints = [ pygame.Rect(150, 800, 100, 100) ]
-        
-
         dungeon_interactables = []
-        
-        player_start = (150, 900 - PLAYER_HEIGHT)
-        
+        player_start = (150, ground_y - PLAYER_HEIGHT)
         dungeon_enemies = []
 
-        # La llamada al constructor de la clase base GameScene
         super().__init__(
             screen, MAP_MAZMORRA_JEFE_PATH, dungeon_platforms,
             dungeon_checkpoints,
             dungeon_interactables,
             player_start, 
             dungeon_enemies,
-            self.map_width, 
-            self.map_height, 
-            next_scene_name="mazmorra_p3" 
+            self.map_width, self.map_height, 
+            next_scene_name="mazmorra_p3"
         )
         
-        # --- CREACIÓN DEL JEFE ---
+        # --- CREACIÓN DEL JEFE CORREGIDA ---
         boss_start_x = self.map_width - 300
-        boss_start_y = 900
+        boss_start_y = ground_y # <-- AHORA APARECE SOBRE EL SUELO
         self.boss = Boss1(boss_start_x, boss_start_y, "boss1")
         self.enemigos.append(self.boss)
         

@@ -291,22 +291,32 @@ class Boss1(Enemigo):
         if ahora - self.last_attack_time > self.attack_cooldown:
             self.atacar(jugador); self.last_attack_time = ahora
 
+# En enemy.py, dentro de la clase Boss1
+
     def atacar(self, jugador):
         ataque_elegido = random.choice(self.ataques_disponibles)
+        
+        # Definimos puntos de origen fijos para los ataques
+        origen_mano = (self.rect.centerx - 40, self.rect.centery - 50)
+        origen_suelo = self.rect.midbottom
+
         if ataque_elegido == "diagonal":
-            nuevo_proyectil = abilities.BossDiagonalProjectile(self.rect.centerx, self.rect.centery, jugador.rect.centerx, jugador.rect.centery)
+            # El ataque diagonal siempre sale de la mano
+            nuevo_proyectil = abilities.BossDiagonalProjectile(origen_mano[0], origen_mano[1], jugador.rect.centerx, jugador.rect.centery)
             self.proyectiles.append(nuevo_proyectil)
+
         elif ataque_elegido == "suelo":
             direccion = 1 if jugador.rect.centerx > self.rect.centerx else -1
-            nuevo_proyectil = abilities.BossGroundProjectile(self.rect.centerx, self.rect.bottom - 20, direccion)
+            # El ataque bajo siempre sale de los pies
+            nuevo_proyectil = abilities.BossGroundProjectile(origen_suelo[0], origen_suelo[1], direccion)
             self.proyectiles.append(nuevo_proyectil)
+
         elif ataque_elegido == "multiple":
+            # El ataque múltiple también sale de la mano
             for i in range(-2, 3):
                 offset_x = i * 40
-                nuevo_proyectil = abilities.BossDiagonalProjectile(self.rect.centerx, self.rect.centery, jugador.rect.centerx + offset_x, jugador.rect.centery - 50)
+                nuevo_proyectil = abilities.BossDiagonalProjectile(origen_mano[0], origen_mano[1], jugador.rect.centerx + offset_x, jugador.rect.centery - 50)
                 self.proyectiles.append(nuevo_proyectil)
-
-
 
 class Boss2(Enemigo):
     def __init__(self, x, y, enemy_name):

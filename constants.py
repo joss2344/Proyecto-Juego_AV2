@@ -69,7 +69,7 @@ ENEMY_INFO = {
         "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6} }
     },
     "golem": {
-        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 130, "y_offset": 0, "hitbox_scale": (1.8, 2.0), "hitbox_offset": (0, 0),
+        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 130, "y_offset": 0, "hitbox_scale": (1.8, 2.0), "hitbox_offset": (0, 15),
         "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 350,
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
@@ -80,7 +80,7 @@ ENEMY_INFO = {
     },
     "wizzardblue": {
         "health": 70, "speed": 1.8, "death_sound": "sounds/lobodeath.mp3",
-        "scale": 0.4, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,2.0), "hitbox_offset": (0,0),
+        "scale": 0.4, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,2.0), "hitbox_offset": (0,10),
         "contact_damage": 0, 
         "attack_range": 400, "attack_cooldown": 2500, "detection_radius": 2500,
         "is_flying": True, "is_ranged": True, 
@@ -97,7 +97,10 @@ ENEMY_INFO = {
         }
     },
     "boss1": {
-        "health": BOSS_HEALTH, "speed": 0, "death_sound": "sounds/muerte_jefe.wav", "scale": 1.0, "width": 250, "height": 250, "y_offset": 50, "hitbox_scale": (1.3, 4.0), "hitbox_offset": (0,0),
+        "health": BOSS_HEALTH, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
+        "scale": 1.0, "width": 250, "height": 250, "y_offset": 0,
+        "hitbox_scale": (0.5, 0.6),  # <-- Hitbox de 50% ancho, 60% alto
+        "hitbox_offset": (-10, -20), # <-- La movemos un poco a la izquierda y arriba para centrarla
         "sprite_path": "Enemies/boss1.png",
         "is_boss": True
     },
