@@ -23,7 +23,7 @@ class MazmorraBoss3Scene(GameScene):
             next_scene_name=None
         )
         self.name = "mazmorra_boss3"
-        self.music_path = BOSS_MUSIC_PATH
+        self.music_path = BOSS_3_MUSIC_PATH
 
         self.boss_start_x = self.map_width - 200
         self.boss_start_y = ground_y-60

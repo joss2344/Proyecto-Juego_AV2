@@ -15,10 +15,12 @@ class CharacterSelectSceneInGame:
         self.title_text = FONT_LARGE.render("Elige tu Guardián", True, WHITE)
         self.title_rect = self.title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 3))
         self.character_data = []
+
         character_names = self.characters
         total_cards_width = len(character_names) * 96; total_spacing_between_cards = (len(character_names) - 1) * 50
         total_area_width = total_cards_width + total_spacing_between_cards
         start_x_initial = (SCREEN_WIDTH - total_area_width) // 2
+
         for i, name in enumerate(character_names):
             try:
                 img = pygame.transform.scale(pygame.image.load(PLAYER_SPRITE_PATHS.get(name, PLAYER_SPRITE_PATHS["Prota"])).convert_alpha(), (96, 144))
@@ -34,9 +36,11 @@ class CharacterSelectSceneInGame:
         if evento.type == pygame.QUIT: self.running = False; pygame.quit(); sys.exit()
         if not self.selection_made and evento.type == pygame.MOUSEBUTTONDOWN:
             mouse_pos = evento.pos
+
             for data in self.character_data:
                 if data["rect"].collidepoint(mouse_pos):
                     self.selected_character = data["name"]; self.selection_made = True; self.selected_rect = data["rect"].copy()
+
         if self.selection_made and evento.type == pygame.KEYDOWN and (evento.key == pygame.K_RETURN or evento.key == pygame.K_SPACE):
             self.running = False
 
@@ -45,6 +49,7 @@ class CharacterSelectSceneInGame:
         for data in self.character_data:
             self.screen.blit(data["image"], data["rect"].topleft); self.screen.blit(data["text_surf"], data["text_rect"].topleft)
             if self.selected_rect and self.selected_rect.colliderect(data["rect"]): pygame.draw.rect(self.screen, MAGIC_BLUE, data["rect"], 5)
+            
         if self.selection_made:
             continue_text = FONT_SMALL.render("Presiona ENTER para continuar...", True, WHITE)
             continue_rect = continue_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT - 50))

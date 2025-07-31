@@ -57,7 +57,7 @@ class Enemigo:
         self.death_sound = self._load_sound(self.enemy_info.get("death_sound"))
 
     def _load_animations(self):
-        # Caso 1: Enemigo sin animaciones (ej. "lobo"). Usa una sola imagen estática.
+        # Caso 1: Enemigo sin animaciones 
         if not self.anim_data:
             if "sprite_path" in self.enemy_info:
                 path = self.enemy_info["sprite_path"]
@@ -66,10 +66,10 @@ class Enemigo:
                     scaled_img = pygame.transform.scale(img, (int(img.get_width() * self.scale), int(img.get_height() * self.scale)))
                     self.animations['static'] = [scaled_img]
                 except pygame.error:
-                    print(f"⚠️ No se pudo cargar la imagen estática: {path}")
+                    print(f"No se pudo cargar la imagen estática: {path}")
             return 
 
-        # Caso 2: Hoja de sprites compleja con varias animaciones (ej. "nightborne")
+        #Hoja de sprites compleja con varias animaciones
         if "animations" in self.anim_data:
             path = self.anim_data.get("path")
             if not path: return
@@ -83,9 +83,9 @@ class Enemigo:
                         temp_img_list.append(img)
                     self.animations[anim_name] = temp_img_list
             except (pygame.error, FileNotFoundError):
-                print(f"⚠️ No se pudo cargar la hoja de sprites compleja: {path}")
+                print(f"No se pudo cargar la hoja de sprites compleja: {path}")
         
-        # Caso 3: Animaciones en archivos separados (ej. "golem")
+        # Animaciones en archivos separados
         elif 'path' in list(self.anim_data.values())[0]:
             for anim_name, data in self.anim_data.items():
                 path = data.get("path")
@@ -101,7 +101,7 @@ class Enemigo:
                         temp_img_list.append(img)
                     self.animations[anim_name] = temp_img_list
                 except (pygame.error, FileNotFoundError):
-                    print(f"⚠️ No se pudo cargar la hoja de sprites: {path}")
+                    print(f"No se pudo cargar la hoja de sprites: {path}")
 
         # Lógica automática para idle/walk si no están definidos
         if 'attack' in self.animations and 'idle' not in self.animations:
@@ -112,7 +112,7 @@ class Enemigo:
     def _load_sound(self, path):
         if not path: return None
         try: return pygame.mixer.Sound(path)
-        except pygame.error as e: print(f"⚠️ No se pudo cargar el sonido '{path}': {e}"); return None
+        except pygame.error as e: print(f"No se pudo cargar el sonido '{path}': {e}"); return None
 
     def update_animation(self):
         if self.action == 'static' or not self.animations.get(self.action): return
@@ -326,11 +326,10 @@ class Boss2(Enemigo):
             sys.exit()
         super().__init__(x, y, 0, enemy_info)
         
-        self.attack_cooldown = 1800 # Tiempo entre ataques
+        self.attack_cooldown = 1800 
         self.last_attack_time = pygame.time.get_ticks()
 
     def actualizar(self, jugador):
-        # Limpiamos la lista de proyectiles por si quedaba algo de la versión anterior
         self.proyectiles = []
 
         if self.is_dying:
@@ -341,7 +340,7 @@ class Boss2(Enemigo):
             dist_x = jugador.hitbox.centerx - self.hitbox.centerx
             distancia_al_jugador = abs(dist_x)
             
-            # --- NUEVA LÓGICA DE IA: PERSEGUIR Y ATACAR ---
+            # ---  LÓGICA DE IA: PERSEGUIR Y ATACAR ---
             if self.action != 'attack':
                 # 1. Atacar si está en rango
                 if distancia_al_jugador < self.attack_range and pygame.time.get_ticks() > self.last_attack_time + self.attack_cooldown:

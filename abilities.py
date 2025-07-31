@@ -139,7 +139,7 @@ class WizzardBlueProjectile(Proyectil):
         if distancia > 0:
             self.vel_x = (distancia_x / distancia) * velocidad_total
             self.vel_y = (distancia_y / distancia) * velocidad_total
-        else: # Si está justo encima, dispara hacia abajo
+        else: 
             self.vel_x = 0
             self.vel_y = velocidad_total
             
@@ -165,13 +165,13 @@ class WizzardBlueProjectile(Proyectil):
 class NightBorneHomingOrb(Proyectil):
     def __init__(self, start_x, start_y, jugador):
         super().__init__(start_x, start_y, 0)
-        self.jugador = jugador # Mantiene una referencia al jugador para seguirlo
+        self.jugador = jugador 
         self.image = pygame.Surface((25, 25), pygame.SRCALPHA)
         pygame.draw.circle(self.image, (180, 0, 255), (12, 12), 12)
         pygame.draw.circle(self.image, (50, 0, 80), (12, 12), 8)
         self.rect = self.image.get_rect(center=(start_x, start_y))
         self.danio = 20
-        self.velocidad = 4.5 # Es lento para que se pueda esquivar
+        self.velocidad = 4.5
         self.lifetime = 8000 # 8 segundos de vida
         self.creation_time = pygame.time.get_ticks()
 
@@ -192,13 +192,13 @@ class NightBorneHomingOrb(Proyectil):
 class NightBorneEruption(Proyectil):
     def __init__(self, x, y):
         super().__init__(x, y, 0)
-        self.image = pygame.Surface((80, 110), pygame.SRCALPHA) # Placeholder visual
-        self.image.fill((100, 0, 150, 100)) # Un rectángulo morado semitransparente
+        self.image = pygame.Surface((80, 110), pygame.SRCALPHA)
+        self.image.fill((100, 0, 150, 100)) 
         self.rect = self.image.get_rect(midbottom=(x, y))
         self.danio = 35
         self.creation_time = pygame.time.get_ticks()
-        self.lifetime = 700 # Dura 0.7 segundos
-        self.hits_multiple = True # Puede golpear varias veces si el jugador se queda encima
+        self.lifetime = 700 
+        self.hits_multiple = True 
 
     def actualizar(self, offset_x=None):
         if pygame.time.get_ticks() - self.creation_time > self.lifetime:
@@ -207,7 +207,6 @@ class NightBorneEruption(Proyectil):
 
 class AgisFallingProjectile(Proyectil):
     def __init__(self, target_x, ground_y):
-        # Nace arriba de la pantalla en la posición X del jugador
         super().__init__(target_x, -50, 0) 
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (20, 45))
         self.rect = self.image.get_rect(center=(self.initial_x, self.initial_y))
@@ -217,7 +216,6 @@ class AgisFallingProjectile(Proyectil):
 
     def actualizar(self, offset_x=None):
         self.rect.y += self.velocidad
-        # Se desactiva al tocar el suelo
         if self.rect.bottom >= self.ground_y:
             self.activo = False
 

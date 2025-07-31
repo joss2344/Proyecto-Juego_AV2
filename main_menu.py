@@ -19,6 +19,7 @@ from levels_mazmorra.mazmorra_boss3 import MazmorraBoss3Scene
 from ui import LoadGameScreen
 from credits import CreditsScene
 
+
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Elemental Trinity")
@@ -32,7 +33,7 @@ scene_map = {
     "mazmorra_p2": MazmorraP2Scene,
     "mazmorra_p3": MazmorraP3Scene,
     "mazmorra_p4": MazmorraP4Scene,
-    "mazmorrap5": MazmorraP5Scene, 
+    "mazmorra_p5": MazmorraP5Scene, 
     "mazmorra_p6": MazmorraP6Scene,
     "mazmorra_jefe": MazmorraJefeScene,
     "mazmorra_boss2": MazmorraBoss2Scene,
@@ -116,31 +117,57 @@ def quit_game():
     stop_menu_music(); pygame.quit(); sys.exit()
 
 def main_menu():
-    fondo_menu = pygame.image.load(MENU_BACKGROUND_PATH).convert()
-    fondo_menu = pygame.transform.scale(fondo_menu, (SCREEN_WIDTH, SCREEN_HEIGHT))
+    fondo_menu = pygame.transform.scale(pygame.image.load(MENU_BACKGROUND_PATH).convert(), (SCREEN_WIDTH, SCREEN_HEIGHT))
     
-    # --- DICCIONARIO DE BOTONES  ---
+    # --- LÓGICA PARA CARGAR Y ESCALAR BOTONES DE IMAGEN ---
+    try:
+        button_images_original = {
+            "Nueva Partida": pygame.image.load("interfaz/play.png").convert_alpha(),
+            "Cargar Partida": pygame.image.load("interfaz/load.png").convert_alpha(),
+            "Créditos": pygame.image.load("interfaz/credits.png").convert_alpha(),
+            "Salir": pygame.image.load("interfaz/exit.png").convert_alpha()
+        }
+        button_images_scaled = {
+            name: pygame.transform.scale(img, (BUTTON_WIDTH, BUTTON_HEIGHT))
+            for name, img in button_images_original.items()
+        }
+    except pygame.error as e:
+        print(f"Error al cargar las imágenes de los botones: {e}")
+        return
+
     botones = {
         "Nueva Partida":  {"accion": start_new_game},
         "Cargar Partida": {"accion": load_and_start_game},
         "Créditos":       {"accion": show_credits}, 
         "Salir":          {"accion": quit_game}
     }
-    y_pos = SCREEN_HEIGHT // 2 - 40 
+    
+    # --- POSICIONAMIENTO CON TU AJUSTE DE ALTURA +230 ---
+    spacing = 40
+    total_area_height = (len(botones) * BUTTON_HEIGHT) + ((len(botones) - 1) * spacing)
+    y_pos = (SCREEN_HEIGHT - total_area_height) // 2 + 230
+
     for nombre, data in botones.items():
-        texto_surf = FONT_LARGE.render(nombre, True, WHITE)
-        data["rect"] = texto_surf.get_rect(center=(SCREEN_WIDTH // 2, y_pos))
-        y_pos += 80
+        image = button_images_scaled.get(nombre)
+        data["image"] = image
+        data["rect"] = image.get_rect(centerx=SCREEN_WIDTH // 2, top=y_pos)
+        y_pos += BUTTON_HEIGHT + spacing
+
+    clock = pygame.time.Clock()
 
     while True:
         screen.blit(fondo_menu, (0, 0))
         mouse_pos = pygame.mouse.get_pos()
+        
+        # Dibuja los botones de imagen en lugar de texto
         for nombre, data in botones.items():
-            color = MAGIC_BLUE if data["rect"].collidepoint(mouse_pos) else WHITE
-            if nombre == "Cargar Partida" and not get_saved_games():
-                color = (100, 100, 100)
-            texto_surf = FONT_LARGE.render(nombre, True, color)
-            screen.blit(texto_surf, data["rect"])
+            if data["rect"].collidepoint(mouse_pos):
+                scaled_img = pygame.transform.scale(data["image"], (int(data["rect"].width * 1.05), int(data["rect"].height * 1.05)))
+                scaled_rect = scaled_img.get_rect(center=data["rect"].center)
+                screen.blit(scaled_img, scaled_rect)
+            else:
+                screen.blit(data["image"], data["rect"])
+
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT or (evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE):
                 quit_game()
@@ -150,7 +177,9 @@ def main_menu():
                     if get_saved_games(): load_and_start_game()
                 if botones["Créditos"]["rect"].collidepoint(evento.pos): show_credits()
                 if botones["Salir"]["rect"].collidepoint(evento.pos): quit_game()
+        
         pygame.display.flip()
+        clock.tick(60)
 
 if __name__ == "__main__":
     play_menu_music()

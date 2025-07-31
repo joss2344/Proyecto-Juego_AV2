@@ -7,7 +7,6 @@ class CreditsScene:
         self.screen = screen
         self.clock = pygame.time.Clock()
         
-        # Cargar la imagen de fondo
         try:
             self.background = pygame.transform.scale(pygame.image.load("fondos/credits.png").convert(), (SCREEN_WIDTH, SCREEN_HEIGHT))
         except pygame.error:
@@ -17,7 +16,6 @@ class CreditsScene:
         self.font_continuara = FONT_LARGE
         self.font_credits = FONT_MEDIUM
         
-        # Texto a mostrar
         self.continuara_surf = self.font_continuara.render("Continuará...", True, WHITE)
         self.continuara_rect = self.continuara_surf.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 4))
         
@@ -63,7 +61,7 @@ class CreditsScene:
             "  (Donde los juegos raros encuentran su hogar)",
             "",
             "El Soporte Vital para Noches en Vela:",
-            "  Mi Mama (me hacia cafecito y me decia que no me quedara despierto hasta tarde)",
+            "  Mi Mama (me decia que no me quedara despierto hasta tarde)",
             "  (La verdadera heroina, sin ella, no habria juego)",
             "",
             "El Auditor de Sonidos Nocturnos:",
@@ -184,15 +182,15 @@ class CreditsScene:
             "¡Nos vemos en la proxima descarga... o en la fila de las baleadas!",
             "  (Si, aceptamos baleadas como pago)",
             "",
-            "¡Que viva Honduras y sus programadores (usan IA)!",
+            "¡Que viva Honduras y sus programadores (aunque usan IA)",
             "  ",
             "",
             "Hecho con pasion, cafe y orgullo en la tierra del cinco estrellas.",
             "  (De Honduras para el mundo, con sabor a semita)",
             "",
             "",
-            "Nambe y diganle a la Eneeh que deje de quitar esa luz basura",
-            "  (mucho jode esa xiomara)",
+            "Nambe y diganle a la Eneeh que deje de quitar esa luz ombe",
+            "  (bajenle a la energia, que ya me la van a cortar)",
             "",
             "",
             "FIN DEL JUEGO",
@@ -200,14 +198,11 @@ class CreditsScene:
             "Gracias por jugar. Presiona ESC para salir."
         ]
 
-        
-        # Posición inicial de los créditos (debajo de la pantalla)
         self.credits_y = SCREEN_HEIGHT + 50
         self.scroll_speed = 1.5
         self.running = True
 
     def run(self):
-        # Poner la música del final
         try:
             pygame.mixer.music.load(ENDING_MUSIC_PATH)
             pygame.mixer.music.play(-1)
@@ -221,7 +216,7 @@ class CreditsScene:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN and (event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN):
-                    self.running = False # Salir de los créditos
+                    self.running = False 
 
             # Mover los créditos hacia arriba
             self.credits_y -= self.scroll_speed
@@ -243,4 +238,4 @@ class CreditsScene:
             pygame.display.flip()
             self.clock.tick(60)
             
-        return None, None # No devuelve ninguna escena siguiente
+        return None, None 

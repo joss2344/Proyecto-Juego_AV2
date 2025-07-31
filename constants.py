@@ -4,6 +4,11 @@ pygame.init()
 info = pygame.display.Info()
 SCREEN_WIDTH, SCREEN_HEIGHT = info.current_w, info.current_h
 
+
+# --- TAMAÑO DE LOS BOTONES DEL MENÚ ---
+BUTTON_WIDTH = 250
+BUTTON_HEIGHT = 70
+
 # --- Colors --- #
 WHITE = (255, 255, 255); DARK_GREY = (50, 50, 50); MAGIC_BLUE = (80, 160, 255)
 RED_HEALTH = (255, 0, 0); GREEN_HEALTH = (0, 255, 0); BLACK = (0, 0, 0)
@@ -68,8 +73,9 @@ ENEMY_INFO = {
         "attack_damage": 15, "attack_range": 120, "attack_cooldown": 1500, "attack_damage_frame": 4, "detection_radius": 400,
         "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6} }
     },
+
     "golem": {
-        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 130, "y_offset": 0, "hitbox_scale": (1.8, 2.0), "hitbox_offset": (0, 15),
+        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 130, "y_offset": 0, "hitbox_scale": (1.8, 2.0), "hitbox_offset": (-10, 20),
         "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 350,
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
@@ -99,17 +105,17 @@ ENEMY_INFO = {
     "boss1": {
         "health": BOSS_HEALTH, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
         "scale": 1.0, "width": 250, "height": 250, "y_offset": 0,
-        "hitbox_scale": (0.5, 0.6),  # <-- Hitbox de 50% ancho, 60% alto
-        "hitbox_offset": (-10, -20), # <-- La movemos un poco a la izquierda y arriba para centrarla
+        "hitbox_scale": (0.5, 0.6), 
+        "hitbox_offset": (-10, -20), 
         "sprite_path": "Enemies/boss1.png",
         "is_boss": True
     },
 
         "nightborne": {
-        "health": 500, "speed": 2.6, "death_sound": "sounds/muerte_jefe.wav", # <-- VELOCIDAD AÑADIDA
+        "health": 500, "speed": 2.6, "death_sound": "sounds/muerte_jefe.wav",
         "scale": 4.0, "width": 200, "height": 180, "y_offset": 5, "hitbox_scale": (0.5, 0.9), "hitbox_offset": (0,0),
         "is_boss": True,
-        "attack_damage": 40, "attack_range": 150, "attack_damage_frame": 5, "detection_radius": 600, # <-- RANGOS AJUSTADOS
+        "attack_damage": 40, "attack_range": 150, "attack_damage_frame": 5, "detection_radius": 600,
         "anim_data": {
             "idle":   {"path": "Enemies/NightBorne/nightborne_idle.png",   "frames": 9},
             "walk":   {"path": "Enemies/NightBorne/nightborne_walk.png",   "frames": 6},
@@ -145,14 +151,16 @@ MAP_MAZMORRA_BOSS2_PATH = "fondos/mazmorra_boss2.png"
 
 MENU_MUSIC_PATH = "Soundtracks/menu.mp3"
 BOSS_MUSIC_PATH = "Soundtracks/soundtrackboss1.mp3"
+BOSS_2_MUSIC_PATH = "Soundtracks/soundtrackboss2.mp3"
+BOSS_3_MUSIC_PATH = "Soundtracks/soundtrackboss3.mp3"
 ENDING_MUSIC_PATH = "Soundtracks/ending.mp3"
 
 INITIAL_ZOOM = 0.85
 DEATH_QUOTES = [
     ("Alguien lee esto??", "El que paga el internet"),
     ("Por cada taza de arroz, dos de agua. Y para cada boss, paciencia.", "Madre de Prota"),
-    ("Se te acabo la carga, mi rey.", "Eneeh"),
-    ("El 'Game Over' es solo una sugerencia.", "Guru del Grind"),
+    ("Se te acabo la carga, mi rey.", "Eneh"),
+    ("El 'Game Over' es solo una sugerencia.", "Guru del ciber"),
     ("Menos vida que el internet de Multicable en la tormenta.", "Un Hondureño Frustrado"),
     ("Otra vez a empezar. Como lunes despues de feriado.", "Eduardo Maldonado"),
     ("Creiste que era facil, ¿verdad? Como conseguir una baleada con todo en hora pico.", "El Maje de la Baleada"),
@@ -165,8 +173,8 @@ DEATH_QUOTES = [
     ("La proxima vez, no te confies como cuando dejaste el arroz en la estufa.", "El Vecino Preocupado"),
     ("Hasta aqui te trajo la corriente. Y tu mala decision.", "El Rio Ulua"),
     ("Ni todas las baleadas del mundo te van a revivir.", "Doña Susy"),
-    ("Eso te pasa por andar de vivo.", "El Espejo de la Realidad"),
+    ("Eso te pasa por andar de vivo.", "la Realidad"),
     ("Un valiente menos. Un dolor de cabeza mas para el programador.", "Gemini"),
-    ("La oscuridad siempre te espera. Especialmente cuando se va la luz.", "La ENEE"),
+    ("La oscuridad siempre te espera. Especialmente cuando se va la luz.", "La ENEH"),
     ("No te moriste, solo te tomaste un descanso eterno.", "El Entrenador Espiritual"),
 ]

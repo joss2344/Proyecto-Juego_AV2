@@ -56,7 +56,7 @@ class GameScene:
                 off_image = pygame.image.load(f"interfaz/key_fragment_{i}_off.png").convert_alpha()
                 self.key_fragments_off.append(pygame.transform.scale(off_image, key_fragment_size))
             except pygame.error:
-                print(f"⚠️ No se pudo cargar imagen de llave {i}.")
+                print(f"No se pudo cargar imagen de llave {i}.")
         self.progreso_llave = [False, False, False]
 
     def set_key_progress(self, progress):
@@ -71,7 +71,7 @@ class GameScene:
             bg = pygame.image.load(self.background_path).convert_alpha()
             return pygame.transform.scale(bg, (self.map_width, self.map_height))
         except pygame.error:
-            print(f"⚠️ No se pudo cargar '{self.background_path}'")
+            print(f"No se pudo cargar '{self.background_path}'")
             temp_surface = pygame.Surface((self.map_width, self.map_height)) 
             temp_surface.fill((50, 50, 80))
             return temp_surface
@@ -81,7 +81,7 @@ class GameScene:
         try:
             return pygame.mixer.Sound(path)
         except pygame.error as e:
-            print(f"⚠️ No se pudo cargar el sonido '{path}': {e}")
+            print(f"No se pudo cargar el sonido '{path}': {e}")
             return None
 
     def _spawn_enemies(self):
@@ -90,7 +90,6 @@ class GameScene:
             enemy_info = ENEMY_INFO.get(enemy_name)
             if enemy_info:
                 if enemy_info.get("is_flying"):
-                    # Asumiendo que la clase FlyingEnemy existe y es compatible
                     self.enemigos.append(FlyingEnemy(x, y, patrol_width, enemy_info))
                 else:
                     self.enemigos.append(Enemigo(x, y, patrol_width, enemy_info))
@@ -155,7 +154,7 @@ class GameScene:
                 pygame.mixer.music.play(-1)
                 GameScene._current_music_path = self.music_path
         except pygame.error as e: 
-            print(f"⚠️ No se pudo cargar o reproducir la música '{self.music_path}': {e}")
+            print(f"No se pudo cargar o reproducir la música '{self.music_path}': {e}")
 
     def stop_background_music(self):
         if pygame.mixer.music.get_busy(): 
@@ -262,7 +261,7 @@ class GameScene:
                 self.enemigos.remove(enemigo)
                 continue
               
-            # --- LÓGICA DE DAÑO POR CONTACTO ACTUALIZADA ---
+            # --- LÓGICA DE DAÑO POR CONTACTO  ---
             # Ahora usa jugador.hitbox y enemigo.hitbox para más precisión
             if enemigo.contact_damage > 0:
                 if enemigo.salud > 0 and self.jugador.hitbox.colliderect(enemigo.hitbox):
@@ -293,6 +292,7 @@ class GameScene:
 
     def draw(self):
         render_offset_x, render_offset_y = self.offset_x, self.offset_y
+        self.screen.fill(BLACK)
         if self.shake_timer > 0:
             render_offset_x += random.randint(-self.shake_intensity, self.shake_intensity)
             render_offset_y += random.randint(-self.shake_intensity, self.shake_intensity)

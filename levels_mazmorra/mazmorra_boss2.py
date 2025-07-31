@@ -22,7 +22,7 @@ class MazmorraBoss2Scene(GameScene):
             next_scene_name="mazmorra_p5" 
         )
         self.name = "mazmorra_boss2"
-        self.music_path = BOSS_MUSIC_PATH
+        self.music_path =  BOSS_2_MUSIC_PATH
 
         # --- CREACIÓN DEL JEFE NIGHTBORNE ---
         boss_start_x = self.map_width - 400
