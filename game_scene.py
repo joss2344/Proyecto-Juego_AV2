@@ -315,14 +315,14 @@ class GameScene:
         if self.is_paused:
             self.pause_menu.draw(self.can_save)
 
-         # --- AÑADE ESTE CÓDIGO TEMPORALMENTE PARA VER LAS PLATAFORMAS ---
-        for p in self.platforms:
-            debug_rect = p.copy()
-            debug_rect.x = (p.x - render_offset_x) * self.zoom
-            debug_rect.y = (p.y - render_offset_y) * self.zoom
-            debug_rect.width *= self.zoom
-            debug_rect.height *= self.zoom
-            pygame.draw.rect(self.screen, (0, 0, 255), debug_rect, 2) # Dibuja en azul
+        #  # --- CÓDIGO TEMPORAL PARA VER LAS PLATAFORMAS ---
+        # for p in self.platforms:
+        #     debug_rect = p.copy()
+        #     debug_rect.x = (p.x - render_offset_x) * self.zoom
+        #     debug_rect.y = (p.y - render_offset_y) * self.zoom
+        #     debug_rect.width *= self.zoom
+        #     debug_rect.height *= self.zoom
+        #     pygame.draw.rect(self.screen, (0, 0, 255), debug_rect, 2) # Dibuja en azul
 
     def run(self, selected_character_for_this_scene=None):
         if selected_character_for_this_scene:

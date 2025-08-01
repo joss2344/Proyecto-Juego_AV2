@@ -31,7 +31,7 @@ class MazmorraBoss3Scene(GameScene):
         self.enemigos.append(self.boss)
         self.boss_health_bar = BossHealthBar(screen, self.boss, "Agis, Heraldo del Fin")
 
-        self.chest = FinalChest(self.boss_start_x-270, self.boss_start_y - COFRE_HEIGHT-5 )
+        self.chest = FinalChest(self.boss_start_x-270, self.boss_start_y - COFRE_HEIGHT-50 )
         
         self.dialogue_final = DialogueBox(screen, text_lines=[
             "Así que lo has logrado, mortal...",

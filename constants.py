@@ -75,7 +75,8 @@ ENEMY_INFO = {
     },
 
     "golem": {
-        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 130, "y_offset": 0, "hitbox_scale": (1.8, 2.0), "hitbox_offset": (-10, 20),
+        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 140, "y_offset": 0, "hitbox_scale": (0.8, 10.5),
+        "hitbox_offset": (-10, -500),
         "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 350,
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
@@ -104,9 +105,9 @@ ENEMY_INFO = {
     },
     "boss1": {
         "health": BOSS_HEALTH, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
-        "scale": 1.0, "width": 250, "height": 250, "y_offset": 0,
-        "hitbox_scale": (0.5, 0.6), 
-        "hitbox_offset": (-10, -20), 
+        "scale": 1.0, "width": 350, "height": 400, "y_offset": 0,
+        "hitbox_scale": (0.5, 2.5), 
+        "hitbox_offset": (-10, +120), 
         "sprite_path": "Enemies/boss1.png",
         "is_boss": True
     },

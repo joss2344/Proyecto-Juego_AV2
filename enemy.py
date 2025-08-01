@@ -210,9 +210,9 @@ class Enemigo:
             if current_health_width > 0:
                 pygame.draw.rect(superficie, RED_HEALTH, (bar_pos_x, bar_pos_y, current_health_width, bar_height))
 
-        if hasattr(self, 'hitbox'):
-            debug_rect = pygame.Rect((self.hitbox.x - offset_x) * zoom, (self.hitbox.y - offset_y) * zoom, self.hitbox.width * zoom, self.hitbox.height * zoom)
-            pygame.draw.rect(superficie, (255, 0, 0), debug_rect, 2)
+        # if hasattr(self, 'hitbox'):
+        #     debug_rect = pygame.Rect((self.hitbox.x - offset_x) * zoom, (self.hitbox.y - offset_y) * zoom, self.hitbox.width * zoom, self.hitbox.height * zoom)
+        #     pygame.draw.rect(superficie, (255, 0, 0), debug_rect, 2)
             
             
 class FlyingEnemy(Enemigo):

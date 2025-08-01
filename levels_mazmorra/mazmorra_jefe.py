@@ -31,7 +31,7 @@ class MazmorraJefeScene(GameScene):
         
         # --- CREACIÓN DEL JEFE CORREGIDA ---
         boss_start_x = self.map_width - 300
-        boss_start_y = ground_y # <-- AHORA APARECE SOBRE EL SUELO
+        boss_start_y = ground_y-35
         self.boss = Boss1(boss_start_x, boss_start_y, "boss1")
         self.enemigos.append(self.boss)
         
@@ -65,7 +65,7 @@ class MazmorraJefeScene(GameScene):
         if self.victory_dialogue.active:
             self.victory_dialogue.update()
             if self.victory_dialogue.finished:
-                self.running = False # Finaliza la escena para la transición
+                self.running = False 
             return 
             
         super().update() # Llama al update de GameScene para lógica general
@@ -76,11 +76,11 @@ class MazmorraJefeScene(GameScene):
         
         # Lógica de victoria cuando el jefe es derrotado
         if not self.enemigos and not self.victory_dialogue_triggered:
-            self.progreso_llave[0] = True # Marca el primer fragmento de llave como conseguido
+            self.progreso_llave[0] = True 
             
   
             
-            self.can_save = True # <--- ¡CAMBIO CRUCIAL! Habilita el guardado manual después de la victoria
+            self.can_save = True 
             
             if self.sound_fragment_collected:
                 self.sound_fragment_collected.play() # Reproduce sonido de fragmento

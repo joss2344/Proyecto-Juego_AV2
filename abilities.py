@@ -111,7 +111,7 @@ class BossGroundProjectile(Proyectil):
     def __init__(self, x, y, direccion):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss_groundwave"]).convert_alpha(), (60, 30))
-        self.rect = self.image.get_rect(midbottom=(x, y)); self.velocidad = 8; self.danio = 5
+        self.rect = self.image.get_rect(midbottom=(x, y+60)); self.velocidad = 8; self.danio = 5
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
@@ -247,6 +247,6 @@ class AgisGroundProjectile(Proyectil):
     def __init__(self, x, y, direccion):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (60, 30))
-        self.rect = self.image.get_rect(midbottom=(x, y))
+        self.rect = self.image.get_rect(midbottom=(x, y+70))
         self.velocidad = 8
         self.danio = 20

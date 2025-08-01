@@ -210,14 +210,14 @@ class Jugador:
             if render_width > 0 and render_height > 0:
                 superficie.blit(pygame.transform.scale(imagen_a_dibujar, (render_width, render_height)), (render_pos_x, render_pos_y))
 
-        # --- Dibuja la hitbox de depuración ---
-        if hasattr(self, 'hitbox'):
-            debug_hitbox_rect = self.hitbox.copy()
-            debug_hitbox_rect.x = (self.hitbox.x - offset_x) * zoom
-            debug_hitbox_rect.y = (self.hitbox.y - offset_y) * zoom
-            debug_hitbox_rect.width *= zoom
-            debug_hitbox_rect.height *= zoom
-            pygame.draw.rect(superficie, (0, 255, 0), debug_hitbox_rect, 2) # Dibuja un rectángulo verde
+        # # --- Dibuja la hitbox de depuración ---
+        # if hasattr(self, 'hitbox'):
+        #     debug_hitbox_rect = self.hitbox.copy()
+        #     debug_hitbox_rect.x = (self.hitbox.x - offset_x) * zoom
+        #     debug_hitbox_rect.y = (self.hitbox.y - offset_y) * zoom
+        #     debug_hitbox_rect.width *= zoom
+        #     debug_hitbox_rect.height *= zoom
+        #     pygame.draw.rect(superficie, (0, 255, 0), debug_hitbox_rect, 2) # Dibuja un rectángulo verde
 
         # Dibuja los proyectiles del jugador
         for proyectil in self.proyectiles:
