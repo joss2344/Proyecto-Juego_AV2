@@ -61,7 +61,7 @@ def run_game_loop(start_scene_name, character, key_progress):
     next_scene_name = start_scene_name
 
     while next_scene_name:
-        # --- LÓGICA CORREGIDA PARA MANEJAR LA ESCENA DE CRÉDITOS ---
+        # --- LÓGICA  PARA MANEJAR LA ESCENA DE CRÉDITOS ---
         if next_scene_name == "credits":
             credits_scene = CreditsScene(screen)
             credits_scene.run()

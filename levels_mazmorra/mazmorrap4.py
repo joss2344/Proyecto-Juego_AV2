@@ -28,10 +28,10 @@ class MazmorraP4Scene(GameScene):
         enemy_offset = -45
 
         enemies_data = [
-            (500, suelo_y + enemy_offset, 300, "depredator"),
+            (500, suelo_y-10 + enemy_offset, 300, "depredator"),
             (1150, suelo_y - 275, 100, "wizzardblue"),
-            (1700, suelo_y + enemy_offset, 200, "fire"),
-            (1950, suelo_y + enemy_offset, 200, "wind"),
+            (1700, suelo_y-10 + enemy_offset, 200, "fire"),
+            (1950, suelo_y-10 + enemy_offset, 200, "wind"),
             (2300, suelo_y + enemy_offset, 150, "jades"),
         ]
 

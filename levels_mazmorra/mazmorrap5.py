@@ -9,26 +9,26 @@ class MazmorraP5Scene(GameScene):
         self.map_height = 830
         
         # Ajustamos la altura base del suelo para que coincida con el fondo
-        ground_y = 805
+        ground_y = 815
 
         # --- PLATAFORMAS AJUSTADAS EN ALTURA Y SEPARACIÓN ---
-        suelo_y = ground_y +20
+        suelo_y = ground_y 
         platforms = [
-            pygame.Rect(0, suelo_y, self.map_width, 50),
+            pygame.Rect(0, suelo_y+20, self.map_width, 50),
 
         ]
         
         checkpoints = [pygame.Rect(1700, ground_y - 250, 100, 100)]
         interactables = []
-        player_start = (100, ground_y - PLAYER_HEIGHT)
+        player_start = (100, ground_y+5 - PLAYER_HEIGHT)
 
         # --- ENEMIGOS REUBICADOS Y NUEVO GOLEM AÑADIDO ---
         enemies_data = [
-            (500, ground_y - 30, 0, "jades"),              
-            (1750, ground_y - 250, 300, "wizzardblue"),     
-            (1200, ground_y, 400, "depredator"),            
-            (2600, ground_y-20, 200, "fire"),                  
-            (1050, ground_y, 300-25, "golem_2"),               
+            (500, ground_y - 35, 0, "jades"),              
+            (1750, ground_y - 240, 300, "wizzardblue"),     
+            (1200, ground_y-35, 400, "depredator"),            
+            (2600, ground_y-35, 200, "fire"),                  
+            (1050, ground_y-35, 300, "golem_2"),               
         ]
         
         super().__init__(

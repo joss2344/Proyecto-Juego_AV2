@@ -26,7 +26,7 @@ class MazmorraBoss3Scene(GameScene):
         self.music_path = BOSS_3_MUSIC_PATH
 
         self.boss_start_x = self.map_width - 200
-        self.boss_start_y = ground_y-60
+        self.boss_start_y = ground_y-50
         self.boss = Boss3(self.boss_start_x, self.boss_start_y, "agis")
         self.enemigos.append(self.boss)
         self.boss_health_bar = BossHealthBar(screen, self.boss, "Agis, Heraldo del Fin")

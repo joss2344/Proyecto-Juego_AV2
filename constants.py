@@ -42,9 +42,9 @@ PLAYER_SPRITE_PATHS = {
 }
 PLAYER_ANIMATION_DATA = {
     "Prota": {"idle": {"frames": 4}, "run": {"frames": 4}},
-    "Lia":   {"idle": {"frames": 3}, "run": {"frames": 3}},
+    "Lia":   {"idle": {"frames": 4}, "run": {"frames": 3}},
     "Kael":  {"idle": {"frames": 3}, "run": {"frames": 3}},
-    "Aria":  {"idle": {"frames": 3}, "run": {"frames": 3}}
+    "Aria":  {"idle": {"frames": 5}, "run": {"frames": 6}}
 }
 
 SKILL_ICON_PATHS = {
@@ -62,45 +62,57 @@ SKILL_ICON_PATHS = {
 
 ## --- DICCIONARIO CENTRAL DE ENEMIGOS ---
 ENEMY_INFO = {
-    "lobo":       {"health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, "width": 45, "height": 30, "y_offset": 0, "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), "sprite_path": "Enemies/lobos.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
-    "depredator": {"health": 50, "speed": 2,   "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "lobo": {
+        "health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, 
+        "width": 45, "height": 30, "y_offset": 5, # Añadido un pequeño offset para alineación
+        "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), 
+        "detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3",
+        "anim_data": { 
+            "idle":   {"path": "Enemies/lobos.png", "frames": 1}, 
+            "die":    {"path": "Enemies/lobos_die.png", "frames": 11} 
+        }
+    },
+    "depredator": {"health": 45, "speed": 2,   "contact_damage": 1, "scale": 0.2, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     "fire":       {"health": 40, "speed": 1.8, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/fire.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
-    "jades":      {"health": 80, "speed": 1.5, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
-    "wind":       {"health": 35, "speed": 2.2, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/wind.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "jades":      {"health": 70, "speed": 1.5, "contact_damage": 1, "scale": 0.4, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "wind":       {"health": 20, "speed": 2.2, "contact_damage": 1.5, "scale": 0.2, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/wind.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     
     "esqueleto": {
-        "health": 60, "speed": 1.5, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 2.0, "width": 60, "height": 90, "y_offset": 0, "hitbox_scale": (0.8, 0.9), "hitbox_offset": (0, 0),
-        "attack_damage": 15, "attack_range": 120, "attack_cooldown": 1500, "attack_damage_frame": 4, "detection_radius": 400,
-        "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6} }
+        "health": 50, "speed": 2.1, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 2.0, "width": 60, "height": 70, "y_offset": 0, "hitbox_scale": (0.8, 0.9), "hitbox_offset": (0, 0),
+        "attack_damage": 15, "attack_range": 120, "attack_cooldown": 1500, "attack_damage_frame": 4, "detection_radius": 600,
+        "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6},
+                      "die": {"path": "Enemies/Skeleton/skeleton_die.png", "frames": 11},
+                        "run": {"path": "Enemies/Skeleton/skeleton_walk.png", "frames": 4}}
     },
 
     "golem": {
-        "health": 150, "speed": 1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 140, "y_offset": 0, "hitbox_scale": (0.8, 10.5),
-        "hitbox_offset": (-10, -500),
-        "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 5, "detection_radius": 350,
+        "health": 150, "speed": 1.1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 140, "y_offset": 0, 
+        "hitbox_scale": (0.5, 0.6), "hitbox_offset": (0, 20),
+        "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 7, "detection_radius": 350,
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
             "walk":   {"path": "Enemies/golem/Golem_1_walk.png",   "frames": 10},
-            "attack": {"path": "Enemies/golem/Golem_1_attack.png", "frames": 11},
-            "die":    {"path": "Enemies/golem/Golem_1_die.png",    "frames": 13}
+            "attack": {"path": "Enemies/golem/Golem_1_attack.png", "frames": 10, "y_offset_adjustment": 20},
+            "die":    {"path": "Enemies/golem/Golem_1_die.png",    "frames": 12}
         }
     },
     "wizzardblue": {
-        "health": 70, "speed": 1.8, "death_sound": "sounds/lobodeath.mp3",
-        "scale": 0.4, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,2.0), "hitbox_offset": (0,10),
+        "health": 20, "speed": 2.8, "death_sound": "sounds/lobodeath.mp3",
+        "scale": 0.2, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,2.0), "hitbox_offset": (0,50),
         "contact_damage": 0, 
-        "attack_range": 400, "attack_cooldown": 2500, "detection_radius": 2500,
+        "attack_range": 400, "attack_cooldown": 3500, "detection_radius": 3500,
         "is_flying": True, "is_ranged": True, 
         "sprite_path": "Enemies/wizzardblue.png"
     },
     "golem_2": {
-        "health": 180, "speed": 1.2, "death_sound": "sounds/muerte_golem.wav", "scale": 4, "width": 130, "height": 120, "y_offset": 5, "hitbox_scale": (1.3,2.0), "hitbox_offset": (0, 0),
-        "attack_damage": 30, "attack_range": 200, "attack_cooldown": 2500, "attack_damage_frame": 6, "detection_radius": 400,
+        "health": 180, "speed": 1.2, "death_sound": "sounds/muerte_golem.wav", "scale": 4, "width": 130, "height": 130, "y_offset": 5, 
+        "hitbox_scale": (0.6, 0.8), "hitbox_offset": (0, 15),
+        "attack_damage": 30, "attack_range": 200, "attack_cooldown": 2500, "attack_damage_frame": 7, "detection_radius": 400,
         "anim_data": {
             "idle":   {"path": "Enemies/golemcito/Golem_2_idle.png",   "frames": 8},
             "walk":   {"path": "Enemies/golemcito/Golem_2_walk.png",   "frames": 10},
             "attack": {"path": "Enemies/golemcito/Golem_2_attack.png", "frames": 11},
-            "die":    {"path": "Enemies/golemcito/Golem_2_die.png",    "frames": 13}
+            "die":    {"path": "Enemies/golemcito/Golem_2_die.png",    "frames": 12}
         }
     },
     "boss1": {
@@ -113,10 +125,10 @@ ENEMY_INFO = {
     },
 
         "nightborne": {
-        "health": 500, "speed": 2.6, "death_sound": "sounds/muerte_jefe.wav",
+        "health": 1200, "speed": 3.6, "death_sound": "sounds/muerte_jefe.wav",
         "scale": 4.0, "width": 200, "height": 180, "y_offset": 5, "hitbox_scale": (0.5, 0.9), "hitbox_offset": (0,0),
         "is_boss": True,
-        "attack_damage": 40, "attack_range": 150, "attack_damage_frame": 5, "detection_radius": 600,
+        "attack_damage": 20, "attack_range": 150, "attack_damage_frame": 10, "detection_radius": 600,
         "anim_data": {
             "idle":   {"path": "Enemies/NightBorne/nightborne_idle.png",   "frames": 9},
             "walk":   {"path": "Enemies/NightBorne/nightborne_walk.png",   "frames": 6},
@@ -126,8 +138,8 @@ ENEMY_INFO = {
     },
 
     "agis": {
-        "health": 400, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
-        "scale": 4.0, "width": 100, "height": 180, "y_offset": 0, "hitbox_scale": (0.8, 2.0), "hitbox_offset": (0,0),
+        "health": 1500, "speed": 0, "death_sound": "sounds/muerte_jefe.wav",
+        "scale": 4.0, "width": 100, "height": 180, "y_offset": 0, "hitbox_scale": (0.8, 2.0), "hitbox_offset": (0,+80),
         "is_boss": True,
         "anim_data": {
             "idle": {"path": "Enemies/Agis.png", "frames": 15},
