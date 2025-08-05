@@ -291,7 +291,6 @@ class Boss1(Enemigo):
         if ahora - self.last_attack_time > self.attack_cooldown:
             self.atacar(jugador); self.last_attack_time = ahora
 
-# En enemy.py, dentro de la clase Boss1
 
     def atacar(self, jugador):
         ataque_elegido = random.choice(self.ataques_disponibles)
@@ -380,11 +379,10 @@ class Boss2(Enemigo):
         self.update_animation()
 
     def atacar(self, jugador):
-        # El ataque físico es simplemente activar la animación
+
         self.action = 'attack'
         self.frame_index = 0
         self.last_attack_time = pygame.time.get_ticks()
-
 
 class Boss3(Enemigo):
     def __init__(self, x, y, enemy_name):
@@ -394,12 +392,44 @@ class Boss3(Enemigo):
             sys.exit()
         super().__init__(x, y, 0, enemy_info)
         
-        self.attack_cooldown = 2500 # Ataca cada 2.5 segundos
+        self.attack_cooldown = 2500
         self.last_attack_time = pygame.time.get_ticks()
         self.ataques_disponibles = ["falling_sky", "diagonal_burst", "ground_wave"]
 
+        ### ---  ATRIBUTOS PARA EL INDICADOR DE ATAQUE (TELEGRAPH) --- ###
+        self.is_telegraphing = False         # Para saber si el jefe está "avisando" un ataque
+        self.telegraph_positions = []        # Lista para guardar dónde caerán los ataques
+        self.telegraph_end_time = 0          # Cuándo termina el aviso y comienza el ataque
+        self.telegraph_alpha = 0             # Transparencia del indicador para el efecto de parpadeo
+        self.telegraph_fade_in = True        # Para controlar si el parpadeo se aclara u oscurece
+
     def actualizar(self, jugador):
         self.vel_x = 0 # Es un jefe estacionario
+
+
+        if self.is_telegraphing:
+            # 1. Lógica del parpadeo del indicador visual
+            fade_speed = 15 # Velocidad del parpadeo
+            if self.telegraph_fade_in:
+                self.telegraph_alpha = min(200, self.telegraph_alpha + fade_speed)
+                if self.telegraph_alpha == 200: self.telegraph_fade_in = False
+            else:
+                self.telegraph_alpha = max(50, self.telegraph_alpha - fade_speed)
+                if self.telegraph_alpha == 50: self.telegraph_fade_in = True
+
+            # 2. Comprueba si el tiempo de aviso ha terminado para lanzar el ataque
+            if pygame.time.get_ticks() >= self.telegraph_end_time:
+                for pos in self.telegraph_positions:
+                    # Crea los proyectiles en las posiciones previamente guardadas
+                    proyectil = abilities.AgisFallingProjectile(pos[0], pos[1])
+                    self.proyectiles.append(proyectil)
+                
+                # 3. Resetea el estado para que el jefe pueda volver a atacar
+                self.is_telegraphing = False
+                self.telegraph_positions = []
+            
+            # Detiene el resto de la lógica para que el jefe no haga nada más mientras avisa
+            return
 
         # Actualiza proyectiles existentes
         for p in self.proyectiles[:]:
@@ -408,7 +438,7 @@ class Boss3(Enemigo):
 
         # Comprueba si es tiempo de atacar
         ahora = pygame.time.get_ticks()
-        if ahora - self.last_attack_time > self.attack_cooldown and self.action == 'idle':
+        if ahora - self.last_attack_time > self.attack_cooldown and self.action == 'idle' and not self.is_telegraphing:
             self.atacar(jugador)
             self.last_attack_time = ahora
         
@@ -422,19 +452,43 @@ class Boss3(Enemigo):
         ataque_elegido = random.choice(self.ataques_disponibles)
         
         if ataque_elegido == "falling_sky":
-            # Lanza 5 proyectiles que caen sobre el jugador
+
+            self.is_telegraphing = True
+            self.telegraph_positions = []
+
             for i in range(5):
                 offset = random.randint(-150, 150)
-                proyectil = abilities.AgisFallingProjectile(jugador.hitbox.centerx + offset, self.rect.bottom)
-                self.proyectiles.append(proyectil)
+                self.telegraph_positions.append((jugador.hitbox.centerx + offset, self.rect.bottom))
+            
+            # El aviso durará 1.5 segundos (1500 ms) antes de que caigan los proyectiles
+            self.telegraph_end_time = pygame.time.get_ticks() + 1500 
+            self.telegraph_alpha = 0
+            self.telegraph_fade_in = True
 
         elif ataque_elegido == "diagonal_burst":
-            # Lanza una ráfaga de 3 proyectiles diagonales
+            # Lanza una ráfaga de 3 proyectiles diagonales (sin cambios)
             for i in range(3):
                 proyectil = abilities.AgisDiagonalProjectile(self.hitbox.centerx, self.hitbox.centery - 50, jugador.hitbox.centerx, jugador.hitbox.centery)
                 self.proyectiles.append(proyectil)
 
         elif ataque_elegido == "ground_wave":
+            # Lanza una onda por el suelo (sin cambios)
             direccion = 1 if jugador.rect.centerx > self.rect.centerx else -1
             proyectil = abilities.AgisGroundProjectile(self.rect.midbottom[0], self.rect.midbottom[1], direccion)
             self.proyectiles.append(proyectil)
+
+
+    def draw_telegraphs(self, surface, offset_x, offset_y, zoom):
+        if not self.is_telegraphing:
+            return
+
+        # Dibuja una columna de luz parpadeante por cada posición guardada
+        for pos in self.telegraph_positions:
+            # El indicador es una columna desde el cielo hasta la altura del suelo del jefe
+            telegraph_rect = pygame.Rect(pos[0] - 20, 0, 40, pos[1] + 10)
+            
+            # Se usa una superficie temporal para poder aplicarle la transparencia (alpha)
+            s = pygame.Surface((telegraph_rect.width * zoom, telegraph_rect.height * zoom), pygame.SRCALPHA)
+            s.fill((150, 0, 150, self.telegraph_alpha))
+            
+            surface.blit(s, ((telegraph_rect.x - offset_x) * zoom, (telegraph_rect.y - offset_y) * zoom))

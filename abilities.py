@@ -18,7 +18,7 @@ class IceProjectile(Proyectil):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["ice"]).convert_alpha(), (35, 25))
         self.rect = self.image.get_rect(center=(x, y))
-        self.velocidad = 10; self.danio = 10; self.tipo_elemental = "hielo"
+        self.velocidad = 15; self.danio = 10; self.tipo_elemental = "hielo"
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
@@ -27,7 +27,7 @@ class MixedProjectile(Proyectil):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["mixed"]).convert_alpha(), (50, 35))
         self.rect = self.image.get_rect(center=(x, y))
-        self.velocidad = 20; self.danio = 55; self.tipo_elemental = "mixto"
+        self.velocidad = 20; self.danio = 50; self.tipo_elemental = "mixto"
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
@@ -54,7 +54,7 @@ class RootProjectile(Proyectil):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["root"]).convert_alpha(), (40, 20))
         self.rect = self.image.get_rect(center=(x, y))
-        self.velocidad = 9; self.danio = 12; self.tipo_elemental = "tierra"
+        self.velocidad = 9; self.danio = 18; self.tipo_elemental = "tierra"
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
@@ -99,7 +99,7 @@ class BossDiagonalProjectile(Proyectil):
         distancia = math.hypot(distancia_x, distancia_y); velocidad_total = 6
         if distancia > 0: self.vel_x = (distancia_x / distancia) * velocidad_total; self.vel_y = (distancia_y / distancia) * velocidad_total
         else: self.vel_x = 0; self.vel_y = velocidad_total
-        self.rango = 1300; self.distancia_recorrida = 0
+        self.rango = 1500; self.distancia_recorrida = 0
     def actualizar(self, offset_x=None):
         self.rect.x += self.vel_x; self.rect.y += self.vel_y
         self.distancia_recorrida = math.hypot(self.rect.centerx - self.initial_x, self.rect.centery - self.initial_y)
@@ -114,8 +114,6 @@ class BossGroundProjectile(Proyectil):
         self.rect = self.image.get_rect(midbottom=(x, y+50)); self.velocidad = 8; self.danio = 12
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
-
-
 
 class WizzardBlueProjectile(Proyectil):
     def __init__(self, start_x, start_y, target_x, target_y):
@@ -159,9 +157,6 @@ class WizzardBlueProjectile(Proyectil):
         if self.activo:
             s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
-
-
-
 class NightBorneHomingOrb(Proyectil):
     def __init__(self, start_x, start_y, jugador):
         super().__init__(start_x, start_y, 0)
@@ -195,7 +190,7 @@ class NightBorneEruption(Proyectil):
         self.image = pygame.Surface((80, 110), pygame.SRCALPHA)
         self.image.fill((100, 0, 150, 100)) 
         self.rect = self.image.get_rect(midbottom=(x, y))
-        self.danio = 20
+        self.danio = 35
         self.creation_time = pygame.time.get_ticks()
         self.lifetime = 700 
         self.hits_multiple = True 
@@ -210,13 +205,13 @@ class AgisFallingProjectile(Proyectil):
         super().__init__(target_x, -50, 0) 
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (20, 45))
         self.rect = self.image.get_rect(center=(self.initial_x, self.initial_y))
-        self.danio = 15
+        self.danio = 8.2
         self.velocidad = 18
         self.ground_y = ground_y
 
     def actualizar(self, offset_x=None):
         self.rect.y += self.velocidad
-        if self.rect.bottom >= self.ground_y:
+        if self.rect.bottom >= self.ground_y+50:
             self.activo = False
 
 class AgisDiagonalProjectile(Proyectil):
@@ -224,7 +219,7 @@ class AgisDiagonalProjectile(Proyectil):
         super().__init__(start_x, start_y, 0)
         self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (45, 20)), 45)
         self.rect = self.image.get_rect(center=(start_x, start_y))
-        self.danio = 15
+        self.danio = 10
         
         dist_x = target_x - start_x
         dist_y = target_y - start_y
@@ -248,5 +243,5 @@ class AgisGroundProjectile(Proyectil):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (60, 30))
         self.rect = self.image.get_rect(midbottom=(x, y+70))
-        self.velocidad = 15
-        self.danio = 20
+        self.velocidad = 14
+        self.danio = 16

@@ -1,3 +1,6 @@
+#
+# Contenido para el archivo: mazmorra_boss2.py
+#
 import pygame
 import sys
 from game_scene import GameScene
@@ -24,15 +27,27 @@ class MazmorraBoss2Scene(GameScene):
         self.name = "mazmorra_boss2"
         self.music_path =  BOSS_2_MUSIC_PATH
 
-        # --- CREACIÓN DEL JEFE NIGHTBORNE ---
-        boss_start_x = self.map_width - 400
-        boss_start_y = ground_y
-        self.boss = Boss2(boss_start_x, boss_start_y, "nightborne")
+        self.boss = Boss2(self.map_width - 400, ground_y, "nightborne")
         self.enemigos.append(self.boss)
         
         self.boss_health_bar = BossHealthBar(screen, self.boss, "NightBorne")
+        
+        ### NUEVO: DIÁLOGO DE INTRODUCCIÓN DEL JEFE 2 ###
+        self.intro_dialogue = DialogueBox(
+            screen,
+            text_lines=[
+                "El corazón de la mazmorra late con un rencor antiguo... ¡Puedes sentirlo!",
+                "He ahí el NightBorne, un caballero caído, consumido por la eternidad y guardián de este santuario oscuro.",
+                "El segundo fragmento de la Llave Solar arde en su pecho, encadenado a su alma torturada.",
+                "Su colosal espada es lenta, una reliquia de un tiempo olvidado. Anticipa su arco y la evasión será tu aliada.",
+                "Pero no te confíes, pues un solo golpe de esa hoja maldita puede quebrar la voluntad del alma más fuerte.",
+                "¡Acaba con su vigilia eterna y reclama el segundo fragmento!"
+            ],
+            speaker_name="Eco Ancestral"
+        )
+        self.intro_dialogue.start()
+        ### FIN DE LA SECCIÓN NUEVA ###
 
-        # --- LÓGICA DE VICTORIA AÑADIDA ---
         self.victory_dialogue = DialogueBox(screen, text_lines=["El segundo fragmento es tuyo.", "El poder ancestral casi está completo..."], speaker_name="Eco Ancestral")
         self.victory_triggered = False
         self.sound_fragment_collected = self._load_sound("sounds/fragmento.wav")
@@ -50,6 +65,13 @@ class MazmorraBoss2Scene(GameScene):
         self.boss.rect.midbottom = (self.map_width - 400, 900)
 
     def update(self):
+        ### NUEVO: MANEJO DEL DIÁLOGO DE INTRODUCCIÓN ###
+        if self.intro_dialogue.active:
+            self.intro_dialogue.update()
+            self.jugador.vel_x = 0 # Congela al jugador
+            return # Detiene el resto de la lógica
+        ### FIN DE LA SECCIÓN NUEVA ###
+
         if self.victory_dialogue.active:
             self.victory_dialogue.update()
             if self.victory_dialogue.finished:
@@ -80,6 +102,12 @@ class MazmorraBoss2Scene(GameScene):
             self.stop_background_music()
 
     def handle_input(self, evento):
+        ### NUEVO: MANEJO DE INPUT DEL DIÁLOGO DE INTRO ###
+        if self.intro_dialogue.active:
+            self.intro_dialogue.handle_input(evento)
+            return
+        ### FIN DE LA SECCIÓN NUEVA ###
+
         if self.victory_dialogue.active:
             self.victory_dialogue.handle_input(evento)
         else:
@@ -87,7 +115,14 @@ class MazmorraBoss2Scene(GameScene):
 
     def draw(self):
         super().draw()
+
+        ### NUEVO: DIBUJADO DEL DIÁLOGO DE INTRO ###
+        if self.intro_dialogue.active:
+            self.intro_dialogue.draw()
+        ### FIN DE LA SECCIÓN NUEVA ###
+            
         if self.boss in self.enemigos:
             self.boss_health_bar.draw()
+            
         if self.victory_dialogue.active:
             self.victory_dialogue.draw()

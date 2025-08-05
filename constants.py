@@ -19,14 +19,14 @@ FONT_LARGE = pygame.font.SysFont("arial", 38); FONT_MEDIUM = pygame.font.SysFont
 FONT_SMALL = pygame.font.SysFont("arial", 24)
 
 # --- Game Physics --- #
-PLAYER_SPEED = 5; ENEMY_SPEED = 2; DETECTION_RADIUS = 350
+PLAYER_SPEED = 5; ENEMY_SPEED = 2; DETECTION_RADIUS = 400
 GRAVITY = 0.6; JUMP_STRENGTH = -9
 
 # --- Player and Enemy Sizes --- #
 PLAYER_WIDTH = 100; PLAYER_HEIGHT = 100
 ENEMY_WIDTH = 100; ENEMY_HEIGHT = 75 
 BOSS_WIDTH = 500; BOSS_HEIGHT = 500
-BOSS_HEALTH = 2000
+BOSS_HEALTH = 1000
 COFRE_WIDTH = 100; COFRE_HEIGHT = 100
 
 # --- Projectile Properties --- #
@@ -41,7 +41,7 @@ PLAYER_SPRITE_PATHS = {
     
 }
 PLAYER_ANIMATION_DATA = {
-    "Prota": {"idle": {"frames": 4}, "run": {"frames": 4}},
+    "Prota": {"idle": {"frames": 1}, "run": {"frames": 5}},
     "Lia":   {"idle": {"frames": 4}, "run": {"frames": 3}},
     "Kael":  {"idle": {"frames": 3}, "run": {"frames": 3}},
     "Aria":  {"idle": {"frames": 5}, "run": {"frames": 6}}
@@ -63,7 +63,7 @@ SKILL_ICON_PATHS = {
 ## --- DICCIONARIO CENTRAL DE ENEMIGOS ---
 ENEMY_INFO = {
     "lobo": {
-        "health": 30, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, 
+        "health": 35, "speed": 2.5, "contact_damage": 0.2, "scale": 0.3, 
         "width": 45, "height": 30, "y_offset": 5, # Añadido un pequeño offset para alineación
         "hitbox_scale": (1.5, 1.5), "hitbox_offset": (0, 0), 
         "detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3",
@@ -72,13 +72,13 @@ ENEMY_INFO = {
             "die":    {"path": "Enemies/lobos_die.png", "frames": 11} 
         }
     },
-    "depredator": {"health": 45, "speed": 2,   "contact_damage": 1, "scale": 0.2, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
+    "depredator": {"health": 55, "speed": 2,   "contact_damage": 1, "scale": 0.2, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/depredator.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     "fire":       {"health": 40, "speed": 1.8, "contact_damage": 1, "scale": 0.3, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/fire.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     "jades":      {"health": 70, "speed": 1.5, "contact_damage": 1, "scale": 0.4, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/jades.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     "wind":       {"health": 20, "speed": 2.2, "contact_damage": 1.5, "scale": 0.2, "width": 45, "height": 35, "y_offset": 0, "hitbox_scale": (1.3, 1.8), "hitbox_offset": (0, 0), "sprite_path": "Enemies/wind.png","detection_radius": 300, "attack_range": 60, "death_sound": "sounds/lobodeath.mp3"}, # <-- RANGO DE ATAQUE AÑADIDO
     
     "esqueleto": {
-        "health": 50, "speed": 2.1, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 2.0, "width": 60, "height": 70, "y_offset": 0, "hitbox_scale": (0.8, 0.9), "hitbox_offset": (0, 0),
+        "health": 55, "speed": 2.1, "death_sound": "sounds/muerte_esqueleto.wav", "scale": 2.0, "width": 60, "height": 70, "y_offset": 0, "hitbox_scale": (0.8, 0.9), "hitbox_offset": (0, 0),
         "attack_damage": 15, "attack_range": 120, "attack_cooldown": 1500, "attack_damage_frame": 4, "detection_radius": 600,
         "anim_data": { "attack": {"path": "Enemies/Skeleton/skeleton_atk.png", "frames": 6},
                       "die": {"path": "Enemies/Skeleton/skeleton_die.png", "frames": 11},
@@ -86,9 +86,9 @@ ENEMY_INFO = {
     },
 
     "golem": {
-        "health": 150, "speed": 1.1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 140, "y_offset": 0, 
+        "health": 170, "speed": 1.1, "death_sound": "sounds/muerte_golem.wav", "scale": 4.5, "width": 140, "height": 140, "y_offset": 0, 
         "hitbox_scale": (0.5, 0.6), "hitbox_offset": (0, 20),
-        "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 7, "detection_radius": 350,
+        "attack_damage": 25, "attack_range": 220, "attack_cooldown": 2200, "attack_damage_frame": 7, "detection_radius": 450,
         "anim_data": {
             "idle":   {"path": "Enemies/golem/Golem_1_idle.png",   "frames": 8},
             "walk":   {"path": "Enemies/golem/Golem_1_walk.png",   "frames": 10},
@@ -97,10 +97,10 @@ ENEMY_INFO = {
         }
     },
     "wizzardblue": {
-        "health": 20, "speed": 2.8, "death_sound": "sounds/lobodeath.mp3",
-        "scale": 0.2, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,2.0), "hitbox_offset": (0,50),
+        "health": 15, "speed": 2.8, "death_sound": "sounds/lobodeath.mp3",
+        "scale": 0.2, "width": 40, "height": 55, "y_offset": 0, "hitbox_scale": (1.4,3.0), "hitbox_offset": (0,-100),
         "contact_damage": 0, 
-        "attack_range": 400, "attack_cooldown": 3500, "detection_radius": 3500,
+        "attack_range": 400, "attack_cooldown": 3500, "detection_radius": 1500,
         "is_flying": True, "is_ranged": True, 
         "sprite_path": "Enemies/wizzardblue.png"
     },

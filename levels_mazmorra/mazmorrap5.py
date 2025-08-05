@@ -24,7 +24,7 @@ class MazmorraP5Scene(GameScene):
 
         # --- ENEMIGOS REUBICADOS Y NUEVO GOLEM AÑADIDO ---
         enemies_data = [
-            (500, ground_y - 35, 0, "jades"),              
+            (500, ground_y - 45, 0, "jades"),              
             (1750, ground_y - 240, 300, "wizzardblue"),     
             (1200, ground_y-35, 400, "depredator"),            
             (2600, ground_y-35, 200, "fire"),                  
