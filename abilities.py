@@ -96,7 +96,7 @@ class BossDiagonalProjectile(Proyectil):
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss_fireball"]).convert_alpha(), (40, 40))
         self.rect = self.image.get_rect(center=(start_x, start_y)); self.danio = 7
         distancia_x = target_x - start_x; distancia_y = target_y - start_y
-        distancia = math.hypot(distancia_x, distancia_y); velocidad_total = 6
+        distancia = math.hypot(distancia_x, distancia_y); velocidad_total = 15
         if distancia > 0: self.vel_x = (distancia_x / distancia) * velocidad_total; self.vel_y = (distancia_y / distancia) * velocidad_total
         else: self.vel_x = 0; self.vel_y = velocidad_total
         self.rango = 1500; self.distancia_recorrida = 0
@@ -221,7 +221,7 @@ class AgisDiagonalProjectile(Proyectil):
         self.rect = self.image.get_rect(center=(start_x, start_y))
         self.danio = 10
         
-        dist_x = target_x - start_x
+        dist_x = target_x - start_x-10
         dist_y = target_y - start_y
         distancia = math.hypot(dist_x, dist_y)
         velocidad_total = 12
