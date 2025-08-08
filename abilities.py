@@ -94,9 +94,9 @@ class BossDiagonalProjectile(Proyectil):
     def __init__(self, start_x, start_y, target_x, target_y):
         super().__init__(start_x, start_y, 0)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss_fireball"]).convert_alpha(), (40, 40))
-        self.rect = self.image.get_rect(center=(start_x, start_y)); self.danio = 7
+        self.rect = self.image.get_rect(center=(start_x, start_y)); self.danio = 2
         distancia_x = target_x - start_x; distancia_y = target_y - start_y
-        distancia = math.hypot(distancia_x, distancia_y); velocidad_total = 15
+        distancia = math.hypot(distancia_x, distancia_y); velocidad_total = 10
         if distancia > 0: self.vel_x = (distancia_x / distancia) * velocidad_total; self.vel_y = (distancia_y / distancia) * velocidad_total
         else: self.vel_x = 0; self.vel_y = velocidad_total
         self.rango = 1500; self.distancia_recorrida = 0
@@ -111,7 +111,7 @@ class BossGroundProjectile(Proyectil):
     def __init__(self, x, y, direccion):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss_groundwave"]).convert_alpha(), (60, 30))
-        self.rect = self.image.get_rect(midbottom=(x, y+50)); self.velocidad = 8; self.danio = 12
+        self.rect = self.image.get_rect(midbottom=(x, y+50)); self.velocidad = 8; self.danio = 8
     def dibujar(self, s, ox, oy, z):
         if self.activo: s.blit(self.image, ((self.rect.x - ox) * z, (self.rect.y - oy) * z))
 
@@ -206,7 +206,7 @@ class AgisFallingProjectile(Proyectil):
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (20, 45))
         self.rect = self.image.get_rect(center=(self.initial_x, self.initial_y))
         self.danio = 8.2
-        self.velocidad = 18
+        self.velocidad = 20
         self.ground_y = ground_y
 
     def actualizar(self, offset_x=None):
@@ -219,12 +219,12 @@ class AgisDiagonalProjectile(Proyectil):
         super().__init__(start_x, start_y, 0)
         self.image = pygame.transform.rotate(pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (45, 20)), 45)
         self.rect = self.image.get_rect(center=(start_x, start_y))
-        self.danio = 10
+        self.danio = 7
         
         dist_x = target_x - start_x-10
         dist_y = target_y - start_y
         distancia = math.hypot(dist_x, dist_y)
-        velocidad_total = 12
+        velocidad_total = 11
         
         if distancia > 0:
             self.vel_x = (dist_x / distancia) * velocidad_total
@@ -243,5 +243,5 @@ class AgisGroundProjectile(Proyectil):
         super().__init__(x, y, direccion)
         self.image = pygame.transform.scale(pygame.image.load(SKILL_ICON_PATHS["boss3_proyectil"]).convert_alpha(), (60, 30))
         self.rect = self.image.get_rect(midbottom=(x, y+70))
-        self.velocidad = 14
-        self.danio = 16
+        self.velocidad = 15
+        self.danio = 14

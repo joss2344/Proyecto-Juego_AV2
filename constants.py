@@ -170,24 +170,14 @@ ENDING_MUSIC_PATH = "Soundtracks/ending.mp3"
 
 INITIAL_ZOOM = 0.85
 DEATH_QUOTES = [
-    ("Alguien lee esto??", "El que paga el internet"),
+    ("Alguien lee esto??", "neron"),
     ("Por cada taza de arroz, dos de agua. Y para cada boss, paciencia.", "Madre de Prota"),
-    ("Se te acabo la carga, mi rey.", "Eneh"),
-    ("El 'Game Over' es solo una sugerencia.", "Guru del ciber"),
-    ("Menos vida que el internet de Multicable en la tormenta.", "Un Hondureño Frustrado"),
+    ("Menos vida que el internet de Multicable en la tormenta.", "Un Hondureño promedio"),
     ("Otra vez a empezar. Como lunes despues de feriado.", "Eduardo Maldonado"),
     ("Creiste que era facil, ¿verdad? Como conseguir una baleada con todo en hora pico.", "El Maje de la Baleada"),
-    ("Tu ego fue mas grande que tu barra de vida.", "La Espada Vengativa"),
     ("No te preocupes, la venganza es un plato que se come con consomé.", "La Abuela de Cristian"),
-    ("Ni con el poder de la Monja Blanca lograste esto.", "El Espectro Olvidado"),
-    ("50% de descuento en linea blanca.", "El Gallo mas Gallo"),
-    ("Casi lo logras. Casi. Como la H en el ultimo mundial.", "El Comentarista Deportivo"),
-    ("Te mato el lag, no el enemigo.", "El Server Caido"),
-    ("La proxima vez, no te confies como cuando dejaste el arroz en la estufa.", "El Vecino Preocupado"),
-    ("Hasta aqui te trajo la corriente. Y tu mala decision.", "El Rio Ulua"),
+    ("Casi lo logras. Casi. Como la H en el ultimo mundial.", "lobato"),
+    ("Te mato el lag, no el enemigo.", "un mal servidor"),
     ("Ni todas las baleadas del mundo te van a revivir.", "Doña Susy"),
-    ("Eso te pasa por andar de vivo.", "la Realidad"),
-    ("Un valiente menos. Un dolor de cabeza mas para el programador.", "Gemini"),
-    ("La oscuridad siempre te espera. Especialmente cuando se va la luz.", "La ENEH"),
     ("No te moriste, solo te tomaste un descanso eterno.", "El Entrenador Espiritual"),
 ]

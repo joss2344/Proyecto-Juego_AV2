@@ -69,7 +69,7 @@ class AldeaScene(GameScene):
         aldea_platforms = [ pygame.Rect(0, ground_y_aldea+10, self.map_width, 50) ]
         aldea_checkpoints = []
         aldea_interactables = [] 
-        player_start = (100, ground_y_aldea - PLAYER_HEIGHT + 45)
+        player_start = (100, ground_y_aldea - PLAYER_HEIGHT + 45)  # Ajuste para que el jugador esté en el suelo
         aldea_enemies = []
         
         super().__init__(

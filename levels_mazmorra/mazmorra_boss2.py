@@ -1,6 +1,3 @@
-#
-# Contenido para el archivo: mazmorra_boss2.py
-#
 import pygame
 import sys
 from game_scene import GameScene
@@ -11,7 +8,7 @@ from dialogue import DialogueBox
 from game_state import save_game 
 
 class MazmorraBoss2Scene(GameScene):
-    def __init__(self, screen):
+    def __init__(self, screen): # Asumo que ahora recibe 'joystick'
         self.map_width = 1920
         self.map_height = 1080
         ground_y = 900
@@ -19,7 +16,8 @@ class MazmorraBoss2Scene(GameScene):
         player_start = (200, ground_y - PLAYER_HEIGHT)
         
         super().__init__(
-            screen, MAP_MAZMORRA_BOSS2_PATH, platforms,
+            screen, # Pasando el joystick
+            MAP_MAZMORRA_BOSS2_PATH, platforms,
             [], [], player_start, [], 
             self.map_width, self.map_height, 
             next_scene_name="mazmorra_p5" 
@@ -32,7 +30,6 @@ class MazmorraBoss2Scene(GameScene):
         
         self.boss_health_bar = BossHealthBar(screen, self.boss, "NightBorne")
         
-        ### NUEVO: DIÁLOGO DE INTRODUCCIÓN DEL JEFE 2 ###
         self.intro_dialogue = DialogueBox(
             screen,
             text_lines=[
@@ -46,11 +43,13 @@ class MazmorraBoss2Scene(GameScene):
             speaker_name="Eco Ancestral"
         )
         self.intro_dialogue.start()
-        ### FIN DE LA SECCIÓN NUEVA ###
 
         self.victory_dialogue = DialogueBox(screen, text_lines=["El segundo fragmento es tuyo.", "El poder ancestral casi está completo..."], speaker_name="Eco Ancestral")
         self.victory_triggered = False
         self.sound_fragment_collected = self._load_sound("sounds/fragmento.wav")
+
+        # La transición está bloqueada por defecto, esto está bien.
+        self.transition_conditions_met = False
 
     def respawn_player(self):
         super().respawn_player()
@@ -64,25 +63,35 @@ class MazmorraBoss2Scene(GameScene):
         self.boss.action = 'idle'
         self.boss.rect.midbottom = (self.map_width - 400, 900)
 
+        # Re-bloqueamos la transición al reaparecer, esto está bien.
+        self.transition_conditions_met = False
+        self.victory_triggered = False
+
     def update(self):
-        ### NUEVO: MANEJO DEL DIÁLOGO DE INTRODUCCIÓN ###
+        # Manejo de diálogos que pausan el juego
         if self.intro_dialogue.active:
             self.intro_dialogue.update()
-            self.jugador.vel_x = 0 # Congela al jugador
-            return # Detiene el resto de la lógica
-        ### FIN DE LA SECCIÓN NUEVA ###
+            self.jugador.vel_x = 0
+            return
 
         if self.victory_dialogue.active:
             self.victory_dialogue.update()
             if self.victory_dialogue.finished:
-                self.running = False
+                # La transición ahora se maneja al llegar al borde del mapa,
+                # por lo que no es necesario forzar el cambio de escena aquí.
+                # self.running = False 
+                pass
             return
 
+        # 1. Ejecutamos la lógica de la clase base PRIMERO.
+        # Esto mueve todo, pero también comete el error de poner transition_conditions_met = True
         super().update()
         
+        # Actualizamos la barra de vida del jefe si está vivo
         if self.boss in self.enemigos:
             self.boss_health_bar.update(self.boss)
         
+        # Verificamos si el jefe ha sido derrotado
         elif not self.enemigos and not self.victory_triggered:
             self.victory_triggered = True
             
@@ -101,12 +110,23 @@ class MazmorraBoss2Scene(GameScene):
             self.victory_dialogue.start()
             self.stop_background_music()
 
+        # <<<<<<< INICIO DE LA CORRECCIÓN DE EMERGENCIA >>>>>>>>
+        # 2. Imponemos la regla CORRECTA al final de cada fotograma.
+        # Esto anula el error de la clase base.
+        if not self.victory_triggered:
+            # Si la secuencia de victoria NO ha comenzado, la salida está BLOQUEADA.
+
+            if BOSS_HEALTH>0:
+                self.transition_conditions_met = False
+        else:
+            # Si la secuencia de victoria SÍ ha comenzado, la salida está PERMITIDA.
+            self.transition_conditions_met = True
+        # <<<<<<< FIN DE LA CORRECCIÓN DE EMERGENCIA >>>>>>>>
+
     def handle_input(self, evento):
-        ### NUEVO: MANEJO DE INPUT DEL DIÁLOGO DE INTRO ###
         if self.intro_dialogue.active:
             self.intro_dialogue.handle_input(evento)
             return
-        ### FIN DE LA SECCIÓN NUEVA ###
 
         if self.victory_dialogue.active:
             self.victory_dialogue.handle_input(evento)
@@ -116,10 +136,8 @@ class MazmorraBoss2Scene(GameScene):
     def draw(self):
         super().draw()
 
-        ### NUEVO: DIBUJADO DEL DIÁLOGO DE INTRO ###
         if self.intro_dialogue.active:
             self.intro_dialogue.draw()
-        ### FIN DE LA SECCIÓN NUEVA ###
             
         if self.boss in self.enemigos:
             self.boss_health_bar.draw()
